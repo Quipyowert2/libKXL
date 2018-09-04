@@ -1,0 +1,69 @@
+Release Version 1.1.4 [8/12/2001]
+	- The bug in which the expansion image has collapsed was corrected
+	with the KXL_StrechImage function.
+-------------------------------------------------------------------------------
+Release Version 1.1.3 [10/09/2001]
+	- When sound was sounded with single shot, operation corrected the bug which becomes blunt.
+	- Painting-out processing was added to the KXL_DrawPolygon function.
+-------------------------------------------------------------------------------
+Release Version 1.1.2 [29/08/2001]
+	- spec file added.
+-------------------------------------------------------------------------------
+Release Version 1.1.1 [15/08/2001]
+	- The bug of KXL.m4 was corrected.
+-------------------------------------------------------------------------------
+Release Version 1.1.0 [13/08/2001]
+	- 4bpp bitmap iamge support.
+	- change name Timmerxxx to Timerxxx.
+	- speed tuning.
+-------------------------------------------------------------------------------
+Release Version 1.0.0 [12/08/2001]
+	- Major Upgrade.
+	- KXL_SetDrawColor,KXL_DrawPoint,KXL_DrawLine,KXL_DrawRectangle
+	KXL_DrawPolygon added.
+	- libxpm was removed from the library.
+	- An old game does not operate in the version from this time.
+-------------------------------------------------------------------------------
+Release Version 0.5.8 [08/08/2001]
+        - The mouse event was supported.
+	- Bitmap file supported.
+-------------------------------------------------------------------------------
+Release Version 0.5.7 [26/07/2001]
+	- The header file was corrected.
+-------------------------------------------------------------------------------
+Release Version 0.5.6 [17/05/2001]
+	- The function which creates an expansion reduction image was added.
+-------------------------------------------------------------------------------
+Release Version 0.5.5 [07/04/2001]
+	- It was made to correspond to configure script.
+-------------------------------------------------------------------------------
+Release Version 0.5.4 [04/04/2001]
+	- Makefile was corrected.
+-------------------------------------------------------------------------------
+Release Version 0.5.3 [28/03/2001]
+	- It is at KXL_PlaySound at the KXL_SOUND_STOP and
+	  KXL_SOUND_STOP_ALL specification time.
+	- The fault sound was sounding once was corrected.
+-------------------------------------------------------------------------------
+Release Version 0.5.2 [24/03/2001]
+	- Script which acquires the path of a header & library in
+	  KXL It corrected.
+-------------------------------------------------------------------------------
+Release Version 0.5.1 [11/03/2001]
+	- It is the fault to which clipmask was not correctly carried out
+	  with a KXL_PutRectImage function.
+	- It corrected.
+-------------------------------------------------------------------------------
+Release Version 0.5 [05/03/2001]
+	- Fault was corrected.
+-------------------------------------------------------------------------------
+Release Version 0.4 [28/02/2001]
+	- Change accompanied by renewal of a library was carried out.
+	- Fault was corrected.
+-------------------------------------------------------------------------------
+Release Version 0.3 [25/02/2001]
+	- first (pre)release version
+	- It is a multimedia library aiming at easy game development.
+	- From now on, all the things raised here will use this library.
+	- I want to explain a library gradually.
+	- It enabled it to also download a sample in connection with this.
