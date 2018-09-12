@@ -1,0 +1,51 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_CheckEvents</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="./kxldeleteimage.html">Prev</a>
+<a href="./KXL.html">Top</a>
+<a href="./kxlgetevents.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_CheckEvents</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_CheckEvents -- It checks to see the event occurred.
+</pre><br>
+
+<b>Description</b><br>
+<pre>Bool KXL_CheckEvents(void);</pre><br>
+
+<b>Arguments</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Return Value</b><br>
+<pre>True = The event generated.
+False = The event is not generated.
+</pre><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  KXL_CreateWindow(100, 100, "kxl.org", KXL_EVENT_KEY_PRESS_MASK);
+
+  while (<b>KXL_CheckEvents()</b> == False);  
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+
+</body>
+</html>

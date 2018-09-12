@@ -4,7 +4,7 @@
 extern KXL_Window *KXL_Root;
 
 //==============================================================
-//  ８ｂｐｓのＢＭＰを１６ｂｐｓ化する
+//  8bppのＢＭＰを16bpp化する
 //  引き数：8bpsデータ
 //        ：16bpsXイメージ
 //        ：パレット
@@ -19,26 +19,26 @@ void KXL_CreateBitmap8to16(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend)
       offset = (y * to->bytes_per_line) + (x << 1);
       no = from[y * to->width + x];
       if (no == blend) { // 指定パレット番号を黒にする
-	to->data[offset ++] = 0x00;
-	to->data[offset ++] = 0x00;
+        to->data[offset ++] = 0x00;
+        to->data[offset ++] = 0x00;
       } else {
-	// 000rrrrr, 000ggggg, 000bbbbb
-	//            |
-	// gg0bbbbb, rrrrrggg
-	if (!(rgb[no].r | rgb[no].g | rgb[no].b)) { // 完全な黒を無くす
-	  to->data[offset++] = 0x41;
-	  to->data[offset++] = 0x08;
-	} else {
-	  to->data[offset++] = rgb[no].b | (rgb[no].g << 6);
-	  to->data[offset++] = (rgb[no].r << 3) | (rgb[no].g >> 2);
-	}
+        // 000rrrrr, 000ggggg, 000bbbbb
+        //            |
+        // gg0bbbbb, rrrrrggg
+        if (!(rgb[no].r | rgb[no].g | rgb[no].b)) { // 完全な黒を無くす
+          to->data[offset++] = 0x41;
+          to->data[offset++] = 0x08;
+        } else {
+          to->data[offset++] = rgb[no].b | (rgb[no].g << 6);
+          to->data[offset++] = (rgb[no].r << 3) | (rgb[no].g >> 2);
+        }
       }
     }
   }
 }
 
 //==============================================================
-//  ８ｂｐｓのＢＭＰを２４ｂｐｓ化する
+//  8bppのＢＭＰを24bpp化する
 //  引き数：8bpsデータ
 //        ：24bpsXイメージ
 //        ：パレット
@@ -53,26 +53,26 @@ void KXL_CreateBitmap8to24(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend)
       offset = (y * to->bytes_per_line) + ((x * to->bits_per_pixel) >> 3);
       no = from[y * to->width + x];
       if (no == blend) { // 指定パレット番号を黒にする
-	to->data[offset ++] = 0x00;
-	to->data[offset ++] = 0x00;
-	to->data[offset ++] = 0x00;
+        to->data[offset ++] = 0x00;
+        to->data[offset ++] = 0x00;
+        to->data[offset ++] = 0x00;
       } else {
-	if (!(rgb[no].r | rgb[no].g | rgb[no].b)) { // 完全な黒を無くす
-	  to->data[offset ++] = 0x01;
-	  to->data[offset ++] = 0x01;
-	  to->data[offset ++] = 0x01;
-	} else {
-	  to->data[offset ++] = rgb[no].b;
-	  to->data[offset ++] = rgb[no].g;
-	  to->data[offset ++] = rgb[no].r;
-	}
+        if (!(rgb[no].r | rgb[no].g | rgb[no].b)) { // 完全な黒を無くす
+          to->data[offset ++] = 0x01;
+          to->data[offset ++] = 0x01;
+          to->data[offset ++] = 0x01;
+        } else {
+          to->data[offset ++] = rgb[no].b;
+          to->data[offset ++] = rgb[no].g;
+          to->data[offset ++] = rgb[no].r;
+        }
       }
     }
   }
 }
 
 //==============================================================
-//  ８ｂｐｓのＢＭＰを１ｂｐｓ化する
+//  8bppのＢＭＰを1bpp化する
 //  引き数：8bpsデータ
 //        ：1bpsXイメージ
 //==============================================================
@@ -86,9 +86,9 @@ void KXL_CreateBitmap8to1(Uint8 *from, XImage *to, Uint8 blend)
       offset = (y * to->bytes_per_line) + (x >> 3);
       no = from[y * to->width + x];
       if (no != blend)
-	to->data[offset] |= 1 << (x & 7);
+        to->data[offset] |= 1 << (x & 7);
       else
-	to->data[offset] &= ~(1 << (x & 7));
+        to->data[offset] &= ~(1 << (x & 7));
     }
   }
 }
@@ -125,9 +125,9 @@ void KXL_ReadBitmapHeader(Uint8 *filename, KXL_BitmapHeader *hed)
   hed->plane      = KXL_ReadU16(fp);
   hed->depth      = KXL_ReadU16(fp);
   // 4 or 8bpp 以外はサポート外
-  if (hed->depth > 8) {
+  if (hed->depth < 4 || hed->depth > 8) {
     fprintf(stderr, "KXL error message\n'%s' %dbps not support\n", 
-	    filename, hed->depth);
+            filename, hed->depth);
     exit(1);
   }
   hed->lzd        = KXL_ReadU32(fp);
@@ -135,7 +135,7 @@ void KXL_ReadBitmapHeader(Uint8 *filename, KXL_BitmapHeader *hed)
   // イメージサイズがなければ終了
   if (hed->image_size == 0) {
     fprintf(stderr, "KXL error message\n'%s not found image size\n",
-	    filename);
+            filename);
     exit(1);
   }
   hed->x_pixels   = KXL_ReadU32(fp);
@@ -180,9 +180,9 @@ void KXL_ReadBitmapHeader(Uint8 *filename, KXL_BitmapHeader *hed)
       // 最終ラインから読み込む
       fseek(fp, hed->offset + (hed->height - i - 1) * w, 0); 
       for (j = 0; j < w; j ++) {
-	data = fgetc(fp);
-	hed->data[i * hed->w + j * 2 + 0] = data >> 4;
-	hed->data[i * hed->w + j * 2 + 1] = data & 0x0f;
+        data = fgetc(fp);
+        hed->data[i * hed->w + j * 2 + 0] = data >> 4;
+        hed->data[i * hed->w + j * 2 + 1] = data & 0x0f;
       }
     }
   }

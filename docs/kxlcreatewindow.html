@@ -1,0 +1,69 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_CreateWindow</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="./kxldisplayname.html">Prev</a>
+<a href="./KXL.html">Top</a>
+<a href="./kxldeletewindow.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_CreateWindow</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_CreateWindow -- window is created.
+X window must start by any of 16bpp, 24bpp, and 32bpp they are.
+The frame of the same size as window size is created simultaneously.
+A font color is set up white.
+A drawing color is set up black.
+A key repeat is set as OFF.
+</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_CreateWindow(Uint16 width, Uint16 height, Uint8 *title,
+Uint32 events);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>width</td><td>Width of a window.</td></tr>
+<tr><td>height</td><td>Height of a window.</td></tr>
+<tr><td>title</td><td>The name of a title bar.</td></tr>
+<tr><td>events</td><td>The event to receive.<br>
+An event is specified combining the following by logical sum.<br>
+<table border="1">
+<tr><td>KXL_EVENT_KEY_PRESS_MASK</td><td>When a key is press.</td></tr>
+<tr><td>KXL_EVENT_KEY_RELEASE_MASK</td><td>When a key is release.</td></tr>
+<tr><td>KXL_EVENT_BUTTON_PRESS_MASK</td><td>When a mouse button is press.</td></tr>
+<tr><td>KXL_EVENT_BUTTON_RELEASE_MASK</td><td>When a mouse button is release.</td></tr>
+<tr><td>KXL_EVENT_BUTTON_MOTION_MASK</td><td>When a moves pressing mouse button.</td></tr>
+<tr><td>KXL_EVENT_EXPOSURE_MASK</td><td>When a demand of re-drawing.</td></tr>
+</table>
+</td>
+</tr>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing.<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  <b>KXL_CreateWindow(100, 100, "kxl.org", 0);</b>
+  getchar();
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>

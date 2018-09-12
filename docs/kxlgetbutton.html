@@ -1,0 +1,82 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_GetButton</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="./kxlgetkey.html">Prev</a>
+<a href="./KXL.html">Top</a>
+<a href="./kxlinitsound.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_GetButton</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_Button -- Get of the position and button number of a mouse cursor is carried out.
+</pre><br>
+
+<b>Description</b><br>
+<pre>Uint16 KXL_GetButton(Uint16 *left, Uint16 *top);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>left</td><td>Left position of a mouse cursor.</td></tr>
+<tr><td>top</td><td>Top position of a mouse cursor.</td></tr>
+</table>
+<br><br>
+
+<b>Return Value</b><br>
+<pre>
+Button number.
+</pre>
+<br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  Bool flag = False;
+  <b>Uint16 left = 0;
+  Uint16 top = 0;
+  Uint16 no = 0;</b>
+  Uint8 buff[64];
+
+  KXL_CreateWindow(100, 100, "kxl.org",
+		   KXL_EVENT_EXPOSURE_MASK |
+                   KXL_EVENT_BUTTON_PRESS_MASK |
+		   KXL_EVENT_KEY_PRESS_MASK);
+  
+  while (flag == False) {
+    while (KXL_CheckEvents() == False);  
+    switch (KXL_GetEvents()) {
+    case KXL_EVENT_BUTTON_PRESS:
+      <b>no = KXL_GetButton(&left, &top);</b>
+      break;
+    case KXL_EVENT_KEY_PRESS:
+      flag = True;
+      break;
+    }
+    KXL_ClearFrameImm(0, 0, 100, 100);
+    sprintf(buff, "x:%4d", left);
+    KXL_PutText(8, 20, buff);
+    sprintf(buff, "y:%4d", top);
+    KXL_PutText(8, 40, buff);
+    sprintf(buff, "b:%4d", no);
+    KXL_PutText(8, 60, buff);
+    KXL_UpDateImm(0, 0, 100, 100);
+  }
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+
+</body>
+</html>

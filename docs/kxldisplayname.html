@@ -1,0 +1,57 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_DisplayName</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="./vkxlsound.html">Prev</a>
+<a href="./KXL.html">Top</a>
+<a href="./kxlcreatewindow.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_DisplayName</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_DisplayName -- The name of a display is specified.
+It is used before calling a <a href="kxlcreatewindow.html">KXL_CreateWindow</a> function.
+A default is NULL.
+</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_DisplayName(Uint8 *name);</pre>
+<br><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr>
+<td>name</td><td>The name of a display (Xhost).</td>
+</tr>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing.<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(int argc, char **argv)
+{
+  <b>KXL_Display(argv[1]);</b>
+  KXL_CreateWindow(100, 100, "kxl.org", 0);
+  getchar();
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+
+
+</body>
+</html>

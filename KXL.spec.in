@@ -33,12 +33,29 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%doc COPYING ChangeLog KXL.html README
+%doc COPYING ChangeLog README
+%doc docs/*
 %{_prefix}/share/aclocal/KXL.m4
 %{_prefix}/include/*
 %{_prefix}/lib/*
 
 %changelog
+* Sat Jan 19 2002 SATO Katsuyoshi <fc3srx7@mwnet.or.jp>
+- (1.1.5-1)
+- KXL_UpDateRect function was added.
+- KXL_UpDateImm function was added.
+- KXL_ClearFrameRect function was added.
+- KXL_ClearFrameImm function was added.
+- KXL_CopyImageRect function was added.
+- KXL_CopyImageImm function was added.
+- KXL_CopyStretchImageRect function was added.
+- KXL_CopyStretchImageImm function was added.
+- KXL_PutImageRect function was added.
+- KXL_PutImageImm function was added.
+- KXL_PutStretchImageRect function was added.
+- KXL_PutStretchImageImm function was added.
+- Improvement in the speed of various functions.
+
 * Sat Dec 8 2001 SATO Katsuyoshi <fc3srx7@mwnet.or.jp>
 - (1.1.4-1)
 - The bug in which the expansion image has collapsed was corrected with the KXL_StrechImage function.

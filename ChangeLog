@@ -1,3 +1,18 @@
+Release Version 1.1.5 [19/1/2002]
+	- KXL_UpDateRect function was added.
+	- KXL_UpDateImm function was added.
+	- KXL_ClearFrameRect function was added.
+	- KXL_ClearFrameImm function was added.
+	- KXL_CopyImageRect function was added.
+	- KXL_CopyImageImm function was added.
+	- KXL_CopyStretchImageRect function was added.
+	- KXL_CopyStretchImageImm function was added.
+	- KXL_PutImageRect function was added.
+	- KXL_PutImageImm function was added.
+	- KXL_PutStretchImageRect function was added.
+	- KXL_PutStretchImageImm function was added.
+	- Improvement in the speed of various functions.
+-------------------------------------------------------------------------------
 Release Version 1.1.4 [8/12/2001]
 	- The bug in which the expansion image has collapsed was corrected
 	with the KXL_StrechImage function.

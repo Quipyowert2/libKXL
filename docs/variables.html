@@ -1,0 +1,207 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>Global variables</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="being.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxldisplayname.html">Next</a>
+<hr>
+<b>The event to receive.<br>
+An event is specified combining the following by logical sum.</b>
+<pre>
+KXL_EVENT_NO_MASK
+KXL_EVENT_KEY_PRESS_MASK
+KXL_EVENT_KEY_RELEASE_MASK
+KXL_EVENT_BUTTON_PRESS_MASK
+KXL_EVENT_BUTTON_RELEASE_MASK
+KXL_EVENT_BUTTON_MOTION_MASK
+KXL_EVENT_EXPOSURE_MASK
+</pre>
+
+<b>The received event.</b>
+<pre>
+KXL_EVENT_KEY_PRESS
+KXL_EVENT_KEY_RELEASE
+KXL_EVENT_BUTTON_PRESS
+KXL_EVENT_BUTTON_RELEASE
+KXL_EVENT_BUTTON_MOTION
+KXL_EVENT_EXPOSE
+</pre>
+
+<b>The received key code.</b>
+<pre>
+KXL_KEY_BackSpace
+KXL_KEY_Tab
+KXL_KEY_Return
+KXL_KEY_Escape
+KXL_KEY_Delete
+KXL_KEY_Home
+KXL_KEY_Left
+KXL_KEY_Up
+KXL_KEY_Right
+KXL_KEY_Down
+KXL_KEY_F1
+KXL_KEY_F2
+KXL_KEY_F3
+KXL_KEY_F4
+KXL_KEY_F5
+KXL_KEY_F6
+KXL_KEY_F7
+KXL_KEY_F8
+KXL_KEY_F9
+KXL_KEY_F10
+KXL_KEY_F11
+KXL_KEY_F12
+KXL_KEY_Shift_L	
+KXL_KEY_Shift_R	
+KXL_KEY_Control_L
+KXL_KEY_Control_R
+KXL_KEY_Space
+KXL_KEY_Exclam
+KXL_KEY_Quotedbl
+KXL_KEY_Numbersign
+KXL_KEY_Dollar
+KXL_KEY_Percent
+KXL_KEY_Ampersand
+KXL_KEY_Apostrophe
+KXL_KEY_Quoteright
+KXL_KEY_Parenleft
+KXL_KEY_Parenright
+KXL_KEY_Asterisk
+KXL_KEY_Plus
+KXL_KEY_Comma
+KXL_KEY_Minus
+KXL_KEY_Period
+KXL_KEY_Slash
+KXL_KEY_0
+KXL_KEY_1
+KXL_KEY_2
+KXL_KEY_3
+KXL_KEY_4
+KXL_KEY_5
+KXL_KEY_6
+KXL_KEY_7
+KXL_KEY_8
+KXL_KEY_9
+KXL_KEY_Colon
+KXL_KEY_Semicolon
+KXL_KEY_Less
+KXL_KEY_Equal
+KXL_KEY_Greater
+KXL_KEY_Question
+KXL_KEY_At
+KXL_KEY_A
+KXL_KEY_B
+KXL_KEY_C
+KXL_KEY_D
+KXL_KEY_E
+KXL_KEY_F
+KXL_KEY_G
+KXL_KEY_H
+KXL_KEY_I
+KXL_KEY_J
+KXL_KEY_K
+KXL_KEY_L
+KXL_KEY_M
+KXL_KEY_N
+KXL_KEY_O
+KXL_KEY_P
+KXL_KEY_Q
+KXL_KEY_R
+KXL_KEY_S
+KXL_KEY_T
+KXL_KEY_U
+KXL_KEY_V
+KXL_KEY_W
+KXL_KEY_X
+KXL_KEY_Y
+KXL_KEY_Z
+KXL_KEY_Bracketleft
+KXL_KEY_Backslash
+KXL_KEY_Bracketright
+KXL_KEY_Asciicircum
+KXL_KEY_Underscore
+KXL_KEY_Grave
+KXL_KEY_Quoteleft
+KXL_KEY_a
+KXL_KEY_b
+KXL_KEY_c
+KXL_KEY_d
+KXL_KEY_e
+KXL_KEY_f
+KXL_KEY_g
+KXL_KEY_h
+KXL_KEY_i
+KXL_KEY_j
+KXL_KEY_k
+KXL_KEY_l
+KXL_KEY_m
+KXL_KEY_n
+KXL_KEY_o
+KXL_KEY_p
+KXL_KEY_q
+KXL_KEY_r
+KXL_KEY_s
+KXL_KEY_t
+KXL_KEY_u
+KXL_KEY_v
+KXL_KEY_w
+KXL_KEY_x
+KXL_KEY_y
+KXL_KEY_z
+KXL_KEY_Braceleft
+KXL_KEY_Bar
+KXL_KEY_Braceright
+KXL_KEY_Asciitilde
+</pre>
+
+<b>Size of a variable.</b><br>
+<table border="1">
+<tr><td>Sint8</td><td>signed char</td></tr>
+<tr><td>Uint8</td><td>unsigned char</td></tr>
+<tr><td>Sint16</td><td>signed short</td></tr>
+<tr><td>Uint16</td><td>unsigned short</td></tr>
+<tr><td>Sint32</td><td>signed long</td></tr>
+<tr><td>Uint32</td><td>signed long</td></tr>
+</table><br>
+
+<b>Image structure<br>
+The image loaded or copied is stored.<br>
+Usually, it is not used other than Width and Height.</b>
+<pre>
+typedef struct {
+  Pixmap Buffer; // Drawing image
+  Pixmap Mask;   // Mask image
+  GC     MaskGC; // GC of mask image
+  Uint16 Width;  // Drawing width
+  Uint16 Height; // Drawing height
+} KXL_Image;
+</pre>
+// Rectangle structure
+typedef struct {
+  Sint16 Left;           // Left
+  Sint16 Top;            // Top
+  Uint16 Width;          // Width
+  Uint16 Height;         // Height
+} KXL_Rect;
+
+// Polygon array
+typedef XPoint KXL_Polygon;
+
+// Sound control
+typedef enum {
+  KXL_SOUND_PLAY,        // Play sound
+  KXL_SOUND_PLAY_LOOP,   // Loop play sound
+  KXL_SOUND_STOP,        // Stop sound
+  KXL_SOUND_STOP_ALL     // Stop all sound
+} KXL_Command;
+</pre>
+
+</body>
+</html>

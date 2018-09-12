@@ -1,0 +1,55 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_UpDateImm</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxlupdaterect.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxlupdate.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_UpDateImm</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_UpDateImm -- The rectangle of arbitrary frames is copied to a window.</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_UpDateImm(Sint16 left, Sint16 top, Uint16 width, Uint16 height);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>top</td><td>Left position of a frame.</td>
+<tr><td>left</td><td>Top position of a frame.</td>
+<tr><td>width</td><td>Width of a frame.</td>
+<tr><td>height</td><td>Height of a frame.</td>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  KXL_CreateWindow(100, 100, "sample", 0);
+  KXL_SetDrawColor(0xff, 0x00, 0x00);
+  KXL_DrawRectangle(30, 30, 30, 30, True);
+  <b>KXL_UpDateImm(0, 0, 100, 100);</b>
+  getchar();
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>

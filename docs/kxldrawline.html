@@ -1,0 +1,62 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_DrawLine</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxldrawpoint.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxldrawrectangle.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_DrawLine</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_DrawLine -- A line is drawn.
+It clears by the color set up by <a
+href="./kxlsetdrawcolor.html">KXL_SetDrawColor.</a>
+</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_DrawLine(Sint16 left, Sint16 top, Sint16 right, Sint16 bottom);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>left</td><td>Left position which draws.</td>
+<tr><td>top</td><td>Top position which draws.</td>
+<tr><td>right</td><td>Right position which draws.</td>
+<tr><td>bottom</td><td>Bottom position which draws.</td>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  Sint16 i;
+
+  KXL_CreateWindow(100, 100, "sample", 0);
+  for (i = 0; i < 100; i ++) {
+    KXL_SetDrawColor(rand() % 0xff, rand() % 0xff, rand() % 0xff);
+    <b>KXL_DrawLine(0, 0, rand() % 100, rand() % 100);</b>
+  }
+  KXL_UpDateImm(0, 0, 100, 100);
+  getchar();
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>

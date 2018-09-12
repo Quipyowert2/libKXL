@@ -1,0 +1,64 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_DrawRectangle</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxldrawline.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxldrawpolygon.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_DrawRectangle</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_DrawRectangle -- A rectangle is drawn.
+It clears by the color set up by <a
+href="./kxlsetdrawcolor.html">KXL_SetDrawColor.</a>
+</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_DrawRectangle(Sint16 left, Sint16 top, Uint16 width, Uint16 height, Bool fill);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>left</td><td>Left position which draws.</td>
+<tr><td>top</td><td>Top position which draws.</td>
+<tr><td>width</td><td>Width which draws.</td>
+<tr><td>height</td><td>Height which draws.</td>
+<tr><td>fill</td><td>True = The inside of a rectangle is applied.<br>
+False = The inside of a rectangle is not applied.</td>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  Sint16 i;
+
+  KXL_CreateWindow(100, 100, "sample", 0);
+  for (i = 0; i < 20; i ++) {
+    KXL_SetDrawColor(rand() % 0xff, rand() % 0xff, rand() % 0xff);
+    <b>KXL_DrawRectangle(rand() % 80, rand() % 80, 20, 20, True);</b>
+  }
+  KXL_UpDateImm(0, 0, 100, 100);
+  getchar();
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>

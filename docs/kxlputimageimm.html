@@ -1,0 +1,69 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_PutImageImm</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxlputimagerect.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxlputrectimage.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_PutImageImm</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_PutImageImm -- The arbitrary rectangles of an image are drawn.
+</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_PutImageImm(KXL_Image *img, Sint16 src_l, Sint16 src_t, Uint16 src_w, Uint16 src_h, Sint16 left, Sint16 top);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>img</td><td>Pointer of KXL_Image structure.</td></tr>
+<tr><td>src_l</td><td>Left position of a source image.</td>
+<tr><td>src_t</td><td>Top position of a source image.</td>
+<tr><td>src_w</td><td>Width of a source image.</td>
+<tr><td>src_h</td><td>Height of a source image.</td>
+<tr><td>left</td><td>Left position which draws.</td></tr>
+<tr><td>top</td><td>Top position which draws.</td></tr>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+<a href="./sample.bmp">sample.bmp</a>
+<img src="./sample.gif">
+
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  <b>KXL_Image *img;</b>
+ 
+  KXL_CreateWindow(100, 100, "sample", 0);
+  img = KXL_LoadBitmap("sample.bmp", 0);
+  
+  KXL_SetDrawColor(0x00, 0x00, 0xff);
+  KXL_ClearFrameImm(0, 0, 100, 100);
+  KXL_PutImage(img, 10, 10);
+  <b>KXL_PutImageImm(img, 8, 8, 16, 16, 50, 50);</b>
+  KXL_UpDateImm(0, 0, 100, 100);
+  getchar();
+  KXL_DeleteImage(img);
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>

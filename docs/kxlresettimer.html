@@ -1,0 +1,60 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_ResetTimer</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxlgettimer.html">Prev</a>
+<a href="KXL.html">Top</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_ResetTimer</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_ResetTimer -- Timer interruption is reset.
+</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_ResetTimer(void);</pre><br>
+
+<b>Arguments</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Return Value</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  Uint16 count = 0;
+  Uint8 buff[64];
+
+  KXL_CreateWindow(100, 100, "kxl.org", 0);
+
+  KXL_Timer(1); // 1 interruption per second
+
+  while (count <= 10) {
+    KXL_ClearFrameImm(0, 0, 100, 100);
+    sprintf(buff, "%2d second", count ++);
+    KXL_PutText(8, 50, buff);
+    KXL_UpDateImm(0, 0, 100, 100);
+    while (KXL_GetTimer() == False);
+    <b>KXL_ResetTimer();</b>
+  }
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>

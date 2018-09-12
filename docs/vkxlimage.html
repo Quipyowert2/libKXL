@@ -1,0 +1,60 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_Image</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="vkxlkey.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="vkxlrect.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_Image</font> -- Image structure.<br><br>
+
+<b>Structure Definition</b>
+<pre>
+typedef struct {
+  Pixmap Buffer; // Prohibition of use
+  Pixmap Mask;   // Prohibition of use
+  GC     MaskGC; // Prohibition of use
+  Uint16 Width;  // Read-only
+  Uint16 Height; // Read-only
+} KXL_Image;
+</pre><br>
+
+<b>Structure data</b><br>
+<table border="1">
+<tr><td>Buffer</td><td>Pixmap of a image</td></tr>
+<tr><td>Mask</td><td>Pixmap of a mask image</td></tr>
+<tr><td>MaskGC</td><td>GC of a mask image</td></tr>
+<tr><td>Width</td><td>Width of the image</td></tr>
+<tr><td>Height</td><td>Height of the image</td></tr>
+</table>
+<br>
+
+<b>Description</b><br>
+It is used by 
+<a href="./kxlloadbitmap.html">KXL_LoadBitmap</a>
+<a href="./kxlcopyimagerect.html">KXL_CopyImageRect</a>
+<a href="./kxlcopyimageimm.html">KXL_CopyImageImm</a>
+<a href="./kxlcopyimage.html">KXL_CopyImage</a>
+<a href="./kxlcopystretchimagerect.html">KXL_CopyStretchImageRect</a>
+<a href="./kxlcopystretchimageimm.html">KXL_CopyStretchImageImm</a>
+<a href="./kxlcopystretchimage.html">KXL_CopyStretchImage</a>
+<a href="./kxlstrechimage.html">KXL_StrechImage</a>
+<a href="./kxlputimage.html">KXL_PutImage</a>
+<a href="./kxlputimagerect.html">KXL_PutImageRect</a>
+<a href="./kxlputimageimm.html">KXL_PutImageImm</a>
+<a href="./kxlputrectimage.html">KXL_PutRectImage</a>
+<a href="./kxlputstretchimage.html">KXL_PutStretchImage</a>
+<a href="./kxlputstretchimagerect.html">KXL_PutStretchImageRect</a>
+<a href="./kxlputstretchimageimm.html">KXL_PutStretchImageImm</a>
+<a href="./kxldeleteimage.html">KXL_DeleteImage</a>
+
+</body>
+</html>

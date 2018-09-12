@@ -1,0 +1,76 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_GetEvents</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="./kxlcheckevents.html">Prev</a>
+<a href="./KXL.html">Top</a>
+<a href="./kxlgetkey.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_GetEvents</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_GetEvents -- Get of the generated event is carried out.
+</pre><br>
+
+<b>Description</b><br>
+<pre>Uint32 KXL_CheckEvents(void);</pre><br>
+
+<b>Arguments</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Return Value</b><br>
+<table border="1">
+<tr><td>KXL_EVENT_KEY_PRESS</td><td>When a key is press.</td></tr>
+<tr><td>KXL_EVENT_KEY_RELEASE</td><td>When a key is release.</td></tr>
+<tr><td>KXL_EVENT_BUTTON_PRESS</td><td>When a mouse button is press.</td></tr>
+<tr><td>KXL_EVENT_BUTTON_RELEASE</td><td>When a mouse button is release.</td></tr>
+<tr><td>KXL_EVENT_BUTTON_MOTION</td><td>When a moves pressing mouse button.</td></tr>
+<tr><td>KXL_EVENT_EXPOSE</td><td>When a demand of re-drawing.</td></tr>
+</table>
+<br><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  Bool flag = False;
+  
+  KXL_CreateWindow(100, 100, "kxl.org",
+                   KXL_EVENT_KEY_PRESS_MASK |
+                   KXL_EVENT_EXPOSURE_MASK |
+                   KXL_EVENT_BUTTON_PRESS_MASK);
+  
+  while (flag == False) {
+    while (KXL_CheckEvents() == False);  
+    switch (<b>KXL_GetEvents()</b>) {
+    case KXL_EVENT_EXPOSE:
+      fprintf(stderr, "exposure\n");
+      break;
+    case KXL_EVENT_KEY_PRESS:
+      fprintf(stderr, "key press\n");
+      break;
+    case KXL_EVENT_BUTTON_PRESS:
+      fprintf(stderr, "mouse button press\n");
+      flag = True;
+      break;
+    }
+  }
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_CopyStretchImage</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxlcopystretchimageimm.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxlstrechimage.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_CopyStretchImage</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_CopyStretchImage -- An image are expanded or reduced and it copies to a new image.
+</pre><br>
+
+<b>Description</b><br>
+<pre>KXL_Image *KXL_CopyStretchImage(KXL_Image *img, Uint16 width, Uint16 height);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>img</td><td>Pointer of KXL_Image structure.</td></tr>
+<tr><td>width</td><td>New width</td></tr>
+<tr><td>height</td><td>New height</td></tr>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Pointer of new KXL_Image structure.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+<a href="./sample.bmp">sample.bmp</a>
+<img src="./sample.gif">
+
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  <b>KXL_Image *img, *copy_img;</b>
+
+  KXL_CreateWindow(100, 100, "sample", 0);
+  img = KXL_LoadBitmap("sample.bmp", 0);
+  <b>copy_img = KXL_CopyStretchImage(img, 78, 78);</b>
+  
+  KXL_SetDrawColor(0x00, 0x00, 0xff);
+  KXL_ClearFrameImm(0, 0, 100, 100);
+  KXL_PutImage(img, 10, 10);
+  KXL_PutImage(copy_img, 20, 20);
+  KXL_UpDateImm(0, 0, 100, 100);
+  getchar();
+  KXL_DeleteImage(img);
+  KXL_DeleteImage(copy_img);
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>

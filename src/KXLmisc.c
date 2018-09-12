@@ -140,10 +140,10 @@ Uint16 KXL_GetDirection(KXL_Rect src, KXL_Rect target) {
   Uint16 k, x, y;
   Uint16 mx, my, yx, yy;
 
-  mx = src.Left + src.Width / 2;
-  my = src.Top + src.Height / 2;
-  yx = target.Left + target.Width / 2;
-  yy = target.Top + target.Height / 2;
+  mx = src.Left + (src.Width >> 1);
+  my = src.Top + (src.Height >> 1);
+  yx = target.Left + (target.Width >> 1);
+  yy = target.Top + (target.Height >> 1);
 
   x = abs(yx - mx);
   y = abs(yy - my);
@@ -165,7 +165,7 @@ Uint16 KXL_GetDirection(KXL_Rect src, KXL_Rect target) {
 }
 
 //==============================================================
-//  方角取得
+//  角度による加算値設定
 //  引き数：角度
 //        ：水平加算値のポインタ
 //        ：垂直加算値のポインタ
@@ -173,32 +173,13 @@ Uint16 KXL_GetDirection(KXL_Rect src, KXL_Rect target) {
 void KXL_GetDirectionAdd(Sint16 dir, Sint16 *x, Sint16 *y) {
   Sint16 dir2 = dir + 90;
 
-  while (dir < 0)
-    dir += 360;
-  while (dir > 360)
-    dir -= 360;
+  while (dir < 0) dir += 360;
+  while (dir > 360) dir -= 360;
   *x = sin360[dir];
 
-  while (dir2 < 0)
-    dir2 += 360;
-  while (dir2 > 360)
-    dir2 -= 360;
+  while (dir2 < 0) dir2 += 360;
+  while (dir2 > 360) dir2 -= 360;
   *y = sin360[dir2];
-}
-
-//==============================================================
-//  矩形重なり判定
-//  引き数：自分の矩形
-//        ：相手の矩形
-//  戻り値：True-重なっている,False-重なっていない
-//==============================================================
-Bool KXL_RectIntersect(KXL_Rect m, KXL_Rect y)
-{
-  return (m.Left < y.Left + y.Width  - 1 &&
-	  m.Top  < y.Top  + y.Height - 1 &&
-	  y.Left < m.Left + m.Width  - 1 &&
-	  y.Top  < m.Top  + m.Height - 1)
-    ? True : False;
 }
 
 //==============================================================
@@ -209,10 +190,8 @@ Bool KXL_RectIntersect(KXL_Rect m, KXL_Rect y)
 Uint16 KXL_ReadU16(FILE *fp)
 {
   Uint8 c[2];
-  Uint8 i;
 
-  for (i = 0; i < 2; i ++)
-    c[i] = fgetc(fp);
+  fread(c, 1, 2, fp);
   return (Uint16)(c[0] +  c[1] * 0x100);
 }
 
@@ -224,10 +203,8 @@ Uint16 KXL_ReadU16(FILE *fp)
 Uint32 KXL_ReadU32(FILE *fp)
 {
   Uint8 c[4];
-  Uint8 i;
 
-  for (i = 0; i < 4; i ++)
-    c[i] = fgetc(fp);
+  fread(c, 1, 4, fp);
   return (Uint32)(c[0] + c[1] * 0x100L + c[2] * 0x10000L + c[3] * 0x1000000L);
 }
 

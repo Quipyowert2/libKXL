@@ -11,12 +11,12 @@
 #define SND_BLOCK_SIZE      4096
 
 typedef struct {
-  Bool         Active;
-  KXL_Command  Action;
-  Uint16       No;
-  Uint8       *Pos;
-  Uint32       Cnt;
-  Uint32       Length;
+  Bool         Active; // active
+  KXL_Command  Action; // command
+  Uint16       No;     // number
+  Uint8       *Pos;    // position
+  Uint32       Cnt;    // count
+  Uint32       Length; // length
 } KXL_SoundControl;
 
 struct {
@@ -32,11 +32,11 @@ struct {
 } KXL_SoundData;
 
 typedef struct {
-  Uint8  *Pos;
+  Uint8  *Data;
   Uint32  Length;
 } KXL_WaveList;
 
-KXL_WaveList **KXL_wavelist;
+KXL_WaveList *KXL_wavelist;
 
 Bool KXL_SoundOk;
 
@@ -55,32 +55,32 @@ void KXL_SoundServer(void)
   Uint8 *sample_ptr;
 
   // command initialize
-  close(KXL_SoundData.Pipe[1]);
   for (i = 0; i < MAX_SOUNDS_PLAYING; i ++)
     KXL_SoundData.PlaySound[i].Active = False;
   KXL_SoundData.PlayCnt = 0;
-  
+
+  // receive data clear
   FD_ZERO(&sound_fdset);
   FD_SET(KXL_SoundData.Pipe[0], &sound_fdset);
   
   // loop
   while (1) {
     FD_SET(KXL_SoundData.Pipe[0], &sound_fdset);
-    select(KXL_SoundData.Pipe[0]+1, &sound_fdset, NULL, NULL, NULL);
+    select(KXL_SoundData.Pipe[0] + 1, &sound_fdset, NULL, NULL, NULL);
     if (!FD_ISSET(KXL_SoundData.Pipe[0], &sound_fdset)) 
       continue;
     if (read(KXL_SoundData.Pipe[0], &Command,sizeof(Command)) != sizeof(Command)) 
       exit(-1);
     if (Command.Action == KXL_SOUND_STOP_ALL) { // all stop
       if (!KXL_SoundData.PlayCnt)
-	continue;
+        continue;
       for (i = 0; i < MAX_SOUNDS_PLAYING; i ++)
         KXL_SoundData.PlaySound[i].Active = False;
       KXL_SoundData.PlayCnt = 0;
       continue;
     } else if (Command.Action == KXL_SOUND_STOP) { // no. stop
       if (!KXL_SoundData.PlayCnt)
-	continue;
+        continue;
       for (i = 0; i < MAX_SOUNDS_PLAYING; i ++)
         if (KXL_SoundData.PlaySound[i].No == Command.No) {
           KXL_SoundData.PlaySound[i].Active = False;
@@ -88,73 +88,78 @@ void KXL_SoundServer(void)
         }
       continue;
     }
-
+    
     if (KXL_SoundData.PlayCnt || Command.Active == True) {
       struct timeval delay = {0, 0};
       if (!KXL_SoundData.PlayCnt) {
-	arg = 0x00020009;
-	if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_SETFRAGMENT, &arg) >= 0) {
-	  arg = AFMT_U8;
-	  if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_SETFMT, &arg) >= 0) {
-	    arg = 0;
-	    if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_STEREO, &arg) >= 0) {
-	      arg = 8000;
-	      if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_SPEED, &arg) >= 0) {
-		if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_GETBLKSIZE, &fragment_size) >= 0) {
-		  max_sample_size = fragment_size;
-		}
-	      }
-	    }
-	  }
-	}
+        // set fragment
+        arg = 0x00020009;
+        if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_SETFRAGMENT, &arg) >= 0) {
+          // set format
+          arg = AFMT_U8;
+          if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_SETFMT, &arg) >= 0) {
+            // set monaural
+            arg = 0;
+            if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_STEREO, &arg) >= 0) {
+              // set sampling rate
+              arg = 8000;
+              if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_SPEED, &arg) >= 0) {
+                // get block size
+                if (ioctl(KXL_SoundData.Device, SNDCTL_DSP_GETBLKSIZE, &fragment_size) >= 0) {
+                  max_sample_size = fragment_size;
+                }
+              }
+            }
+          }
+        }
       }
       if (Command.Active == True && KXL_SoundData.PlayCnt < MAX_SOUNDS_PLAYING) {
-	for (i = 0; i < MAX_SOUNDS_PLAYING; i ++) {
-	  if (KXL_SoundData.PlaySound[i].Active == False) {
-	    KXL_SoundData.PlaySound[i] = Command;
-	    KXL_SoundData.PlayCnt ++;
-	    break;
-	  }
-	}
+        for (i = 0; i < MAX_SOUNDS_PLAYING; i ++) {
+          if (KXL_SoundData.PlaySound[i].Active == False) {
+            KXL_SoundData.PlaySound[i] = Command;
+            KXL_SoundData.PlayCnt ++;
+            break;
+          }
+        }
       }
       while (KXL_SoundData.PlayCnt &&
-	     select(KXL_SoundData.Pipe[0]+1, &sound_fdset, NULL, NULL, &delay) < 1) {
-	FD_SET(KXL_SoundData.Pipe[0], &sound_fdset);
-	memset(KXL_SoundData.LBuff, 0, fragment_size * sizeof(Sint32));
-	for (i = 0; i < MAX_SOUNDS_PLAYING; i ++) {
-	  Uint16 j;
-	  if (KXL_SoundData.PlaySound[i].Active == False)
-	    continue;
-	  sample_ptr = KXL_SoundData.PlaySound[i].Pos+KXL_SoundData.PlaySound[i].Cnt;
-	  sample_size = MIN(max_sample_size, KXL_SoundData.PlaySound[i].Length - KXL_SoundData.PlaySound[i].Cnt);
-	  KXL_SoundData.PlaySound[i].Cnt += sample_size;
-	  memcpy(KXL_SoundData.FBuff, sample_ptr, sample_size);
-	  if (KXL_SoundData.PlaySound[i].Action == KXL_SOUND_PLAY_LOOP &&
-	      sample_size < max_sample_size) {
-	    KXL_SoundData.PlaySound[i].Cnt = max_sample_size - sample_size;
-	    memcpy(KXL_SoundData.FBuff + sample_size, KXL_SoundData.PlaySound[i].Pos, max_sample_size - sample_size);
-	    sample_size = max_sample_size;
-	  }
-	  for (j = 0; j < sample_size; j ++)
-	    KXL_SoundData.LBuff[j] += (Sint32)KXL_SoundData.FBuff[j];
-	  if (KXL_SoundData.PlaySound[i].Cnt >= KXL_SoundData.PlaySound[i].Length) {
-	    if (KXL_SoundData.PlaySound[i].Action == KXL_SOUND_PLAY_LOOP)
-	      KXL_SoundData.PlaySound[i].Cnt = 0;
-	    else {
-	      KXL_SoundData.PlaySound[i].Active = False;
-	      KXL_SoundData.PlayCnt --;
-	    }
-	  }
-	}
-	for (i = 0; i < fragment_size; i ++) {
-	  if (KXL_SoundData.LBuff[i] < -255)
-	    KXL_SoundData.PBuff[i] = 0;
-	  else if (KXL_SoundData.LBuff[i] > 255)
-	    KXL_SoundData.PBuff[i] = 255;
-	  else 
-	    KXL_SoundData.PBuff[i] = (KXL_SoundData.LBuff[i] >> 1) ^0x80;
-	}
-	write(KXL_SoundData.Device, KXL_SoundData.PBuff, fragment_size);
+             select(KXL_SoundData.Pipe[0]+1, &sound_fdset, NULL, NULL, &delay) < 1) {
+        FD_SET(KXL_SoundData.Pipe[0], &sound_fdset);
+        memset(KXL_SoundData.LBuff, 0, fragment_size * sizeof(Sint32));
+        for (i = 0; i < MAX_SOUNDS_PLAYING; i ++) {
+          Uint16 j;
+          if (KXL_SoundData.PlaySound[i].Active == False)
+            continue;
+          sample_ptr = KXL_SoundData.PlaySound[i].Pos+KXL_SoundData.PlaySound[i].Cnt;
+          sample_size = MIN(max_sample_size, KXL_SoundData.PlaySound[i].Length - KXL_SoundData.PlaySound[i].Cnt);
+          KXL_SoundData.PlaySound[i].Cnt += sample_size;
+          memcpy(KXL_SoundData.FBuff, sample_ptr, sample_size);
+          if (KXL_SoundData.PlaySound[i].Action == KXL_SOUND_PLAY_LOOP &&
+              sample_size < max_sample_size) {
+            KXL_SoundData.PlaySound[i].Cnt = max_sample_size - sample_size;
+            memcpy(KXL_SoundData.FBuff + sample_size, KXL_SoundData.PlaySound[i].Pos, max_sample_size - sample_size);
+            sample_size = max_sample_size;
+          }
+          for (j = 0; j < sample_size; j ++)
+            KXL_SoundData.LBuff[j] += (Sint32)KXL_SoundData.FBuff[j];
+          if (KXL_SoundData.PlaySound[i].Cnt >= KXL_SoundData.PlaySound[i].Length) {
+            if (KXL_SoundData.PlaySound[i].Action == KXL_SOUND_PLAY_LOOP)
+              KXL_SoundData.PlaySound[i].Cnt = 0;
+            else {
+              KXL_SoundData.PlaySound[i].Active = False;
+              KXL_SoundData.PlayCnt --;
+            }
+          }
+        }
+        for (i = 0; i < fragment_size; i ++) {
+          if (KXL_SoundData.LBuff[i] < -255)
+            KXL_SoundData.PBuff[i] = 0;
+          else if (KXL_SoundData.LBuff[i] > 255)
+            KXL_SoundData.PBuff[i] = 255;
+          else 
+            KXL_SoundData.PBuff[i] = (KXL_SoundData.LBuff[i] >> 1) ^0x80;
+        }
+        write(KXL_SoundData.Device, KXL_SoundData.PBuff, fragment_size);
       }
     }
   }
@@ -174,9 +179,9 @@ void KXL_PlaySound(Uint16 no, KXL_Command action)
   SendCommand.Active = True;
   SendCommand.Action = action;
   SendCommand.No     = no;
-  SendCommand.Pos    = KXL_wavelist[no]->Pos;
+  SendCommand.Pos    = KXL_wavelist[no].Data;
   SendCommand.Cnt    = 0;
-  SendCommand.Length = KXL_wavelist[no]->Length;
+  SendCommand.Length = KXL_wavelist[no].Length;
   write(KXL_SoundData.Pipe[1], &SendCommand, sizeof(SendCommand));
 }
 
@@ -185,31 +190,28 @@ void KXL_PlaySound(Uint16 no, KXL_Command action)
 //  引き数：ディレクトリ
 //        ：ファイル名
 //==============================================================
-KXL_WaveList *KXL_LoadSound(Uint8 *path, Uint8 *fname)
+KXL_WaveList KXL_LoadSound(Uint8 *path, Uint8 *fname)
 {
-  KXL_WaveList *new;
+  KXL_WaveList new;
   Uint8 filename[256];
   Uint32 length;
   FILE *file;
   Uint32 i;
-    
-  new = (KXL_WaveList *)KXL_Malloc(sizeof(KXL_WaveList));
+  Uint8 dummy[40];
+  
   sprintf(filename,"%s/%s.wav", path, fname);
   if ((file = fopen(filename,"r")) == NULL) {
     fprintf(stderr, "KXL error message\nKXL_LoadSound : '%s/%s.wav' open error\n",
-	    path, fname);
-    return 0;
+            path, fname);
+    new.Data = 0;
+    return new;
   }
-  for (i = 0; i < 40; i ++)
-    fgetc(file);
-  new->Length = KXL_ReadU32(file);
-
-  new->Pos = (Uint8 *)KXL_Malloc(new->Length);
-
-  fread(new->Pos, new->Length, 1, file);
+  fread(dummy, sizeof(Uint8), 40, file);
+  new.Length = KXL_ReadU32(file);
+  new.Data = (Uint8 *)KXL_Malloc(new.Length);
+  fread(new.Data, sizeof(Uint8), new.Length, file);
   fclose(file);
-  for (i = 0; i < new->Length; i ++)
-    new->Pos[i] = new->Pos[i] ^0x80;
+  for (i = 0; i < new.Length; i ++) new.Data[i] ^= 0x80;
   return new;
 }
 
@@ -222,9 +224,8 @@ void KXL_LoadSoundData(Uint8 *path, Uint8 **fname)
 {
   Uint16 i, max = 0;
   
-  while (fname[max][0])
-    max ++;
-  KXL_wavelist = (KXL_WaveList **)KXL_Malloc(sizeof(KXL_WaveList *) * max);
+  while (fname[max][0]) max ++;
+  KXL_wavelist = (KXL_WaveList *)KXL_Malloc(sizeof(KXL_WaveList ) * max);
   for (i = 0; i < max; i ++)
     KXL_wavelist[i] = KXL_LoadSound(path, fname[i]);
   KXL_SoundData.ListCnt = max;
@@ -238,28 +239,32 @@ void KXL_LoadSoundData(Uint8 *path, Uint8 **fname)
 void KXL_InitSound(Uint8 *path, Uint8 **fname)
 {
   KXL_SoundOk = False;
+
   KXL_LoadSoundData(path, fname);
+  // device check
+  if ((KXL_SoundData.Device = open("/dev/dsp", O_WRONLY)) == -1) {
+    fprintf(stderr, "KXL error message\nnot found sound card\n");
+    return;
+  }
+  // create pipe
   if (pipe(KXL_SoundData.Pipe) < 0) {
     fprintf(stderr, "KXL error message\npipe error\n");
     return;
   }
+  // create child process
   if ((KXL_SoundData.ID = fork()) < 0) {
     fprintf(stderr, "KXL error message\nfork error\n");
     return;
   }
-  KXL_SoundOk = True;
-  if (!KXL_SoundData.ID) {
-    if ((KXL_SoundData.Device = open("/dev/dsp", O_WRONLY)) != -1) {
-      KXL_SoundServer();
-      exit(-1);
-    } else {
-      KXL_SoundOk = False;
-    }
-  } else {
+
+  if (!KXL_SoundData.ID) { // child
+    close(KXL_SoundData.Pipe[1]);
+    KXL_SoundServer();
+    exit(-1);
+  } else { // parents
     close(KXL_SoundData.Pipe[0]);
+    KXL_SoundOk = True;
   }
-  if (KXL_SoundOk == False)
-    fprintf(stderr, "KXL error message\nKXL_InitSoundServer : no sounds\n");
 }
 
 //==============================================================
@@ -267,12 +272,14 @@ void KXL_InitSound(Uint8 *path, Uint8 **fname)
 //==============================================================
 void KXL_EndSound(void)
 {
-  if (KXL_SoundOk == False)
-    return;
-  KXL_PlaySound(0, KXL_SOUND_STOP_ALL);
-  close(KXL_SoundData.Device);
   while (KXL_SoundData.ListCnt)
-    KXL_Free(KXL_wavelist[-- KXL_SoundData.ListCnt]);
+    KXL_Free(KXL_wavelist[-- KXL_SoundData.ListCnt].Data);
   KXL_Free(KXL_wavelist);
-  kill(KXL_SoundData.ID, SIGTERM);
+  if (KXL_SoundData.Device != -1)
+    close(KXL_SoundData.Device);
+  if (KXL_SoundOk == True) {
+    KXL_PlaySound(0, KXL_SOUND_STOP_ALL);
+    kill(KXL_SoundData.ID, SIGTERM);
+  }
 }
+

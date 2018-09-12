@@ -1,0 +1,101 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_InitSound</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxlgetbutton.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxlplaysound.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_InitSound</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_InitSound -- A sound server is started.
+A wav file is read.
+It checks to see /dev/dsp is effective.
+The sampling rates of a wav file must be 8000Hz and a monophonic
+recording.
+A wav file is to 16 files.
+</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_InitSound(Uint8 *path, Uint8 **filename);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>path</td><td>The path with which the wav file is placed.<br>
+Ex. In the case of a current directory, it is ".".</td></tr>
+<tr><td>filename</td><td>Arrangement which described the file name.</td></tr>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+<a href="./sound1.wav">sound1.wav</a>
+<a href="./sound2.wav">sound1.wav</a>
+<a href="./sound3.wav">sound1.wav</a>
+
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  Bool flag = False;
+  <b>Uint8 *wavlist[] = {
+    "sound1", // The sound of No. 0
+    "sound2", // The sound of No. 1
+    "sound3", // The sound of No. 2
+    ""        // Indispensable
+  };</b>
+
+  KXL_CreateWindow(200, 100, "kxl.org",
+		   KXL_EVENT_EXPOSURE_MASK |
+		   KXL_EVENT_KEY_PRESS_MASK);
+  <b>KXL_InitSound(".", wavlist);</b>
+
+  while (flag == False) {
+    while (KXL_CheckEvents() == False);  
+    switch (KXL_GetEvents()) {
+    case KXL_EVENT_EXPOSE:
+      KXL_ClearFrameImm(0, 0, 200, 100);
+      KXL_PutText(8, 20, "[1] - sound1");
+      KXL_PutText(8, 40, "[2] - sound2");
+      KXL_PutText(8, 60, "[3] - sound3");
+      KXL_PutText(8, 99, "[4] - exit");
+      KXL_UpDateImm(0, 0, 200, 100);
+      break;;
+    case KXL_EVENT_KEY_PRESS:
+      switch (KXL_GetKey()) {
+      case KXL_KEY_1:
+	KXL_PlaySound(0, KXL_SOUND_PLAY);
+	break;
+      case KXL_KEY_2:
+	KXL_PlaySound(1, KXL_SOUND_PLAY);
+	break;
+      case KXL_KEY_3:
+	KXL_PlaySound(2, KXL_SOUND_PLAY);
+	break;
+      case KXL_KEY_4:
+	flag = True;
+	break;
+      }
+    }
+  }
+  KXL_EndSound();
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_Font</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxlclearframe.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxlputtext.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_Font</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_Font -- The drawing font and drawing color of a text.
+A default font is "-adobe-courier-bold-r-normal--14-*-*-*-*-*-iso8859-1"
+A default color is white.
+</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_Font(Uint8 *name, Uint8 red, Uint8 green, Uint8 blue);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>name</td><td>The drawing font of a text.<br>
+It is NULL when you do not want to change a font.</td></tr>
+<tr><td>red</td><td>Red luminosity.</td></tr>
+<tr><td>green</td><td>Green luminosity.</td></tr>
+<tr><td>blue</td><td>Blue luminosity.</td></tr>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  KXL_CreateWindow(100, 100, "sample", 0);
+  KXL_Font(NULL, 0xff, 0x00, 0x00);
+  KXL_PutText(0, 20, "Sample");
+  <b>KXL_Font("-sony-*-medium-i-*-*-*-*-*-*-*-*-*-*", 0x00, 0xff, 0x00);</b>
+  KXL_PutText(20, 50, "Sample");
+  KXL_UpDateImm(0, 0, 100, 100);
+  getchar();
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+
+
+</body>
+</html>

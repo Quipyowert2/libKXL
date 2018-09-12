@@ -1,0 +1,56 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_TextWidth</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxlputtext.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxlsetdrawcolor.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_TextWidth</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_PutText -- The drawing width of a text is obtained.</pre><br>
+
+<b>Description</b><br>
+<pre>Uint16 KXL_TextWidth(Uint8 *text);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>text</td><td>Text which draws.</td>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Drawing width of a text.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  Uint8 *text = "kxl.org";
+  Uint16 w;
+
+  KXL_CreateWindow(100, 100, "sample", 0);
+  KXL_Font(NULL, 0xff, 0x00, 0x00);
+  w = <b>KXL_TextWidth(text);</b>
+  KXL_PutText(100 - w / 2, 10, text);
+  KXL_UpDateImm(0, 0, 100, 100);
+  getchar();
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>

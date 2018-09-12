@@ -1,0 +1,140 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>It makes for the time being</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="./outline.html">Prev</a>
+<a href="./KXL.html">Top</a>
+<a href="./vkxleventmask.html">Next</a>
+<hr>
+
+<font size=+2>It makes for the time being</font><br><br>
+
+<pre>
+// sample.c
+#include < KXL.h>
+
+int main(void)
+{
+  Bool flag = False ;
+
+  // Create a window by 100x100.
+  // event receives only the bottom of a re-drawing event and key presss.
+  // If return key is pushed, it will end.
+  KXL_CreateWindow(100, 100, "sample"
+                   KXL_EVENT_EXPOSURE_MASK |
+                   KXL_EVENT_KEY_PRESS_MASK);
+
+  while(flag != True ){
+    // event loop
+    while(KXL_CheckEvents()) {
+      // which acquires a event
+      switch(KXL_GetEvents()) {
+      case KXL_EVENT_EXPOSE: // event of re-drawing
+        // A frame is cleared
+        KXL_ClearFrameImm(0, 0, 100, 100);
+        // "sample" is drawn
+        KXL_PutText(30, 50, "sample");
+        / A frame is made to reflect in a window
+        KXL_UpDateImm(0, 0, 100, 100);
+        break;
+      case KXL_EVENT_KEY_PRESS: // event of key press
+        // If a return key was pushed, it will end
+        if (KXL_GetKey() == KXL_KEY_Return)
+          flag = True;
+        break ;
+      }
+    }
+  }
+  // A window is closed
+  KXL_DeleteWindow();
+  return 0;
+}
+
+gcc sample.c -o sample -L/usr/X11R6/lib -lX11 -lKXL
+./sample
+</pre>
+<hr>
+First of all, a window is created.
+<pre>
+  KXL_CreateWindow(100, 100, "sample"
+                   KXL_EVENT_EXPOSURE_MASK |
+                   KXL_EVENT_KEY_PRESS);
+</pre>
+It is a setup that this is window of the size of width 100 and height
+100, display it on a title bar as "sample", and it receives re-drawing
+and key press as an event. At this time, pixmap (referred to as
+frame below) of the same size is created. Once it does not draw
+directly to window fundamentally but draws on a frame, a frame is made
+to reflect in window.
+<br><br>
+
+Next, an event is received.
+<pre>
+  while(KXL_CheckEvents()){
+    switch(KXL_GetEvents()){
+    case KXL_EVENT_EXPOSE: // event of re-drawing
+          :
+    case KXL_EVENT_KEY_PRESS: // event of key press
+          :
+    }
+  }
+</pre>
+It is confirmed whether the event occurred in KXL_CheckEvents(). If
+anything does not have an event, it will escape from while. If an
+event occurs, it will investigate which event it is by
+KXL_GetEvents().
+<br><br>
+
+Event of Re-drawing(KXL_EVENT_EXPOSE) If it generates, a thing required
+for a frame will be drawn. The whole frame is cleared first.
+<pre>
+  KXL_ClearFrameImm(0, 0, 100, 100);
+</pre>
+A frame is cleared here (the left 0, top 0, width 100, height 100).
+<br><br>
+
+A character sequence will be drawn if a frame is cleared.
+<pre>
+  KXL_PutText(30,50, "sample");
+</pre>
+The character which this calls to the left as 30 from the upper left
+  of a frame, and calls "sample" below in the position of 50 is
+  drawn. A default font set
+"-adobe-courier-bold-r-normal--14-*-*-*-*-*-iso8859-1 " Coming out,
+  the color has become white.
+<br><br>
+
+If drawing to a frame finishes, a frame is made to reflect in a
+window.
+<pre>
+  KXL_UpDateImm(0, 0, 100, 100);
+</pre>
+A frame (the left 0, top 0, width 100, height 100) is transmitted to a window here.
+<br><br>
+
+Event of key press(KXL_EVENT_KEY_PRESS) If it generates, it will
+judge which key was pushed.
+<pre>
+  if (KXL_GetKey() == KXL_KEY_Return)
+    flag = True;
+</pre>
+KXL_GetKey() The key come out of and pushed is acquired and it is a
+return key. KXL_KEY_Return True will be set to flag if it becomes. It
+escapes from a loop now.
+<br><br>
+
+Finally a window is closed.
+<pre>
+  KXL_DeleteWindow();
+</pre>
+
+
+
+</body>
+</html>

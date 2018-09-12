@@ -1,0 +1,65 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="kacchan">
+   <title>KXL_PutStretchImage</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxlputrectimage.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxlputstretchimagerect.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_PutStretchImage</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_PutStretchImage -- It expands or reduces and an image is drawn.</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_PutStretchImage(KXL_Image *img, Uint16 width, Uint16 height. Sint16 left, Sint16 top);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>img</td><td>Pointer of KXL_Image structure.</td></tr>
+<tr><td>width</td><td>Width which draws.</td></tr>
+<tr><td>height</td><td>Height which draws.</td></tr>
+<tr><td>left</td><td>Left position which draws.</td></tr>
+<tr><td>top</td><td>Top position which draws.</td></tr>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+<a href="./sample.bmp">sample.bmp</a>
+<img src="./sample.gif">
+
+#include &lt;KXL.h&gt;
+
+int main(void)
+{
+  <b>KXL_Image *img;</b>
+ 
+  KXL_CreateWindow(100, 100, "sample", 0);
+  img = KXL_LoadBitmap("sample.bmp", 0);
+  
+  KXL_SetDrawColor(0x00, 0x00, 0xff);
+  KXL_ClearFrameImm(0, 0, 100, 100);
+  <b>KXL_PutStretchImage(img, 100, 100, 0, 0);</b>
+  KXL_UpDateImm(0, 0, 100, 100);
+  getchar();
+  KXL_DeleteImage(img);
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>
