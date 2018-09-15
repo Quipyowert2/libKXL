@@ -310,6 +310,9 @@ void KXL_CreateWindow(Uint16 w, Uint16 h, Uint8 *title, Uint32 event)
 
   // ウィンドウ用の領域を確保する
   KXL_Root = (KXL_Window *)KXL_Malloc(sizeof(KXL_Window));
+  KXL_Root->Display = NULL;
+  KXL_Root->Frame = NULL;
+  KXL_Root->WinFont = NULL;
   // Connect to X server
   if (!(KXL_Root->Display = XOpenDisplay(KXL_DName))) {
     fprintf(stderr, "KXL error message\nCannot open display\n");
@@ -380,6 +383,7 @@ void KXL_DeleteWindow(void)
   // Auto repeat on
   XAutoRepeatOn(KXL_Root->Display);
   // Delete font
+  XFreeFont(KXL_Root->Display, KXL_Root->WinFont);
   XFreeGC(KXL_Root->Display, KXL_Root->FontGC);
   // Delete window
   XDestroyWindow(KXL_Root->Display, KXL_Root->Win);
@@ -427,8 +431,13 @@ void KXL_Font(Uint8 *str, Uint8 r, Uint8 g, Uint8 b)
   else // 24 or 32
     rgb = (r << 16) | (g << 8) | b;
   if (str) {
-    KXL_Root->FontGC = XCreateGC(KXL_Root->Display, KXL_Root->Win,
-                                 0, 0);
+    if (KXL_Root->WinFont) {
+      XFreeFont(KXL_Root->Display, KXL_Root->WinFont);
+    }
+    if (!KXL_Root->FontGC) {
+      KXL_Root->FontGC = XCreateGC(KXL_Root->Display, KXL_Root->Win,
+                                   0, 0);
+    }
     KXL_Root->WinFont = XLoadQueryFont(KXL_Root->Display, str);
     if (KXL_Root->WinFont == (XFontStruct *)NULL) {
       fprintf(stderr,
