@@ -3,7 +3,7 @@ dnl AM_PATH_KXL
 dnl Test for libKXL, and define KXL_CFLAGS and KXL_LIBS as appropriate.
 dnl enables arguments --with-kxl-prefix= -with-kxl-inc-prefix=
 dnl
-AC_DEFUN(AM_PATH_KXL,
+AC_DEFUN([AM_PATH_KXL],
 [dnl
 dnl Get the cfags and libraries for KXL
 dnl
