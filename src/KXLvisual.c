@@ -313,6 +313,7 @@ void KXL_CreateWindow(Uint16 w, Uint16 h, Uint8 *title, Uint32 event)
   KXL_Root->Display = NULL;
   KXL_Root->Frame = NULL;
   KXL_Root->WinFont = NULL;
+  KXL_Root->FontGC = NULL;
   // Connect to X server
   if (!(KXL_Root->Display = XOpenDisplay(KXL_DName))) {
     fprintf(stderr, "KXL error message\nCannot open display\n");
