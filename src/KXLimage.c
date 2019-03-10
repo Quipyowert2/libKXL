@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h> // for exit
 #include "KXL.h"
 
 extern KXL_Window *KXL_Root;

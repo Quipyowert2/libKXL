@@ -1,3 +1,6 @@
+#include <stdlib.h> // for exit
+#include <string.h> // for memset, memcpy
+#include <unistd.h> // for pipe, close
 #include <stdio.h>
 #include <signal.h>
 #include <fcntl.h>

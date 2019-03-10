@@ -1,3 +1,5 @@
+#include <stdlib.h> // for exit
+#include <string.h> // for strlen
 #include <stdio.h>
 #include "KXL.h"
 
