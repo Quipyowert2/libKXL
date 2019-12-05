@@ -331,7 +331,7 @@ void KXL_CreateWindow(Uint16 w, Uint16 h, Uint8 *title, Uint32 event)
   if (KXL_Root->Depth < 16) {
     fprintf(stderr,
             "KXL error message\n"
-            "%bpp:%dbpp color not support.\n"
+            "%dbpp:%dbpp color not support.\n"
             "Please 16 or 24 or 32bpp color",
             KXL_Root->Depth, KXL_Root->Depth);
     exit(1);
