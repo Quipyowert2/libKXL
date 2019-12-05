@@ -111,7 +111,7 @@
 #define KXL_KEY_Y               0x059
 #define KXL_KEY_Z               0x05a
 #define KXL_KEY_Bracketleft     0x05b // "
-#define KXL_KEY_Backslash       0x05c // \
+#define KXL_KEY_Backslash       0x05c // '\'
 #define KXL_KEY_Bracketright    0x05d // #
 #define KXL_KEY_Asciicircum     0x05e
 #define KXL_KEY_Underscore      0x05f // _
