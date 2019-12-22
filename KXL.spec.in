@@ -7,7 +7,7 @@ Name         : %{name}
 Version      : %{version}
 Release      : %{release}
 Source       : http://www2.mwnet.or.jp/~fc3srx7/download/%{name}-%{version}.tar.gz
-Copyright    : GPL
+License      : GPL
 Group        : System Environment/Libraries
 URL          : http://www2.mwnet.or.jp/~fc3srx7/
 BuildRoot    : /var/tmp/%{name}-%{version}-root
@@ -40,6 +40,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/*
 
 %changelog
+* Sun Dec 22 2019 Nathan Mills <Quipyowert2@users.noreply.github.com>
+- (1.1.6-1)
+- Change obsolete Copyright tag to License tag
+- Fix typo in format string.
+- Fix commented out KXL_KEY_Bracketright
+- Fix "implicit declaration of built-in function" warnings
+- Fix a conditional jump or move error from Valgrind
+- Fix approx 1MB memory leak in KXL_Font()
 * Sat Jan 19 2002 SATO Katsuyoshi <fc3srx7@mwnet.or.jp>
 - (1.1.5-1)
 - KXL_UpDateRect function was added.
