@@ -1,6 +1,6 @@
 %define name @PACKAGE@
 %define version  @VERSION@
-%define release  1
+%define release  2
 
 Summary      : KXL -- a visual & sound library
 Name         : %{name}
@@ -42,6 +42,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Wed Mar 4 2020 Nathan Mills <Quipyowert2@users.noreply.github.com>
+- (1.2.0-2)
+- Fix rpmbuild failing to find KXL library in lib64.
 - (1.2.0-1)
 - Use PulseAudio by default for sound output.
 * Sun Dec 22 2019 Nathan Mills <Quipyowert2@users.noreply.github.com>
