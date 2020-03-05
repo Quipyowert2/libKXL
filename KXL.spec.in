@@ -11,6 +11,7 @@ License      : GPL
 Group        : System Environment/Libraries
 URL          : http://www2.mwnet.or.jp/~fc3srx7/
 BuildRoot    : /var/tmp/%{name}-%{version}-root
+Requires     : libpulse-simple.so.0()(64bit)
 
 %description
 Kacchan X Windows System Liblary (KXL) is a visual & sound library.
@@ -22,7 +23,7 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %build
 ./configure --prefix=%{_prefix}
-make
+make CFLAGS+=-DUSE_PULSEAUDIO
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -37,9 +38,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc docs/*
 %{_prefix}/share/aclocal/KXL.m4
 %{_prefix}/include/*
-%{_prefix}/lib/*
+%{_prefix}/lib64/*
 
 %changelog
+* Wed Mar 4 2020 Nathan Mills <Quipyowert2@users.noreply.github.com>
+- (1.2.0-1)
+- Use PulseAudio by default for sound output.
 * Sun Dec 22 2019 Nathan Mills <Quipyowert2@users.noreply.github.com>
 - (1.1.6-1)
 - Change obsolete Copyright tag to License tag
