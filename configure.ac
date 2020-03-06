@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT([KXL], [1.2.0])
+AC_INIT([KXL], [1.2.1])
 AC_CONFIG_SRCDIR([src/KXL.h])
 AM_INIT_AUTOMAKE
 dnl Checks for programs.
