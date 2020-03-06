@@ -202,9 +202,14 @@ void KXL_PlaySound(Uint16 no, KXL_Command action)
   SendCommand.Active = True;
   SendCommand.Action = action;
   SendCommand.No     = no;
-  SendCommand.Pos    = KXL_wavelist[no].Data;
   SendCommand.Cnt    = 0;
-  SendCommand.Length = KXL_wavelist[no].Length;
+  if (action == KXL_SOUND_STOP_ALL) {
+    SendCommand.Pos = 0;
+    SendCommand.Length = 0;
+  } else {
+    SendCommand.Pos    = KXL_wavelist[no].Data;
+    SendCommand.Length = KXL_wavelist[no].Length;
+  }
   write(KXL_SoundData.Pipe[1], &SendCommand, sizeof(SendCommand));
 }
 
