@@ -198,6 +198,7 @@ void KXL_PlaySound(Uint16 no, KXL_Command action)
 
   if (KXL_SoundOk == False)
     return;
+  memset(&SendCommand, 0, sizeof(SendCommand));
   SendCommand.Active = True;
   SendCommand.Action = action;
   SendCommand.No     = no;
