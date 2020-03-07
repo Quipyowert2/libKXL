@@ -621,6 +621,7 @@ KXL_Image *KXL_LoadBitmap(Uint8 *filename, Uint8 blend)
                      new->Width, new->Height,
                      BitmapPad(KXL_Root->Display), 0);
   img->data = (Uint8 *)KXL_Malloc(img->bytes_per_line * new->Height);
+  memset(img->data, 0, img->bytes_per_line * new->Height);
   KXL_CreateBitmap8to1(hed.data, img, blend);
   // マスクイメージをピックスマップにコピーする
   new->Mask = XCreatePixmap(KXL_Root->Display, KXL_Root->Win,
