@@ -24,3 +24,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
   make
   make install
 --------------------------------------------------------------------------
+#Requirements
+pulseaudio
+libpulse-devel
+libX11-devel
+--------------------------------------------------------------------------
