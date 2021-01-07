@@ -103,6 +103,7 @@ void KXL_SoundServer(void)
     
     if (KXL_SoundData.PlayCnt || Command.Active == True) {
       struct timeval delay = {0, 0};
+#ifndef USE_PULSEAUDIO
       if (!KXL_SoundData.PlayCnt) {
         // set fragment
         arg = 0x00020009;
@@ -125,6 +126,7 @@ void KXL_SoundServer(void)
           }
         }
       }
+#endif
       if (Command.Active == True && KXL_SoundData.PlayCnt < MAX_SOUNDS_PLAYING) {
         for (i = 0; i < MAX_SOUNDS_PLAYING; i ++) {
           if (KXL_SoundData.PlaySound[i].Active == False) {
