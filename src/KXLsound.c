@@ -250,7 +250,7 @@ KXL_WaveList KXL_LoadSound(const char *path, const char *fname)
 //  引き数：ディレクトリ
 //        ：ファイル名リスト
 //==============================================================
-void KXL_LoadSoundData(const char *path, const char **fname)
+void KXL_LoadSoundData(const char *path, char **fname)
 {
   Uint16 i, max = 0;
   
