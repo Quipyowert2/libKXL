@@ -41,6 +41,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*
 
 %changelog
+* Wed Sep 29 2021 Nathan Mills <Quipyowert2@users.noreply.github.com>
+- (1.2.3-1)
+- Fix some pointer sign warnings
 * Fri Mar 6 2020 Nathan Mills <Quipyowert2@users.noreply.github.com>
 - (1.2.2-1)
 - Fix Valgrind warning "Invalid read of size 8" in KXL_PlaySound
