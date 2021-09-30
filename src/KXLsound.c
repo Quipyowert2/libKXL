@@ -220,10 +220,10 @@ void KXL_PlaySound(Uint16 no, KXL_Command action)
 //  引き数：ディレクトリ
 //        ：ファイル名
 //==============================================================
-KXL_WaveList KXL_LoadSound(Uint8 *path, Uint8 *fname)
+KXL_WaveList KXL_LoadSound(const char *path, const char *fname)
 {
   KXL_WaveList new;
-  Uint8 filename[256];
+  char filename[256];
   Uint32 length;
   FILE *file;
   Uint32 i;
@@ -250,7 +250,7 @@ KXL_WaveList KXL_LoadSound(Uint8 *path, Uint8 *fname)
 //  引き数：ディレクトリ
 //        ：ファイル名リスト
 //==============================================================
-void KXL_LoadSoundData(Uint8 *path, Uint8 **fname)
+void KXL_LoadSoundData(const char *path, const char **fname)
 {
   Uint16 i, max = 0;
   
@@ -266,7 +266,7 @@ void KXL_LoadSoundData(Uint8 *path, Uint8 **fname)
 //  引き数：ディレクトリ
 //        ：ファイル名リスト
 //==============================================================
-void KXL_InitSound(Uint8 *path, Uint8 **fname)
+void KXL_InitSound(const char *path, char **fname)
 {
   KXL_SoundOk = False;
 

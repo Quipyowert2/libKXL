@@ -242,7 +242,7 @@ void        KXL_Put_StretchImage(KXL_Image *img, Uint16 src_l, Uint16 src_t, Uin
 void        KXL_CreateBitmap8to16(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend);
 void        KXL_CreateBitmap8to24(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend);
 void        KXL_CreateBitmap8to1(Uint8 *from, XImage *to, Uint8 blend);
-void        KXL_ReadBitmapHeader(Uint8 *filename, KXL_BitmapHeader *hed);
+void        KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed);
 Uint16      KXL_ReadU16(FILE *fp);
 Uint32      KXL_ReadU32(FILE *fp);
 #define     KXL_ReadS16 (Sint16)KXL_ReadU16
@@ -255,8 +255,8 @@ Uint32      KXL_ReadU32(FILE *fp);
 // Visual function prototypes
 //================================================================
 // Window functions
-void        KXL_DisplayName(Uint8 *name);
-void        KXL_CreateWindow(Uint16 w, Uint16 h, Uint8 *title, Uint32 event);
+void        KXL_DisplayName(const char *name);
+void        KXL_CreateWindow(Uint16 w, Uint16 h, const char *title, Uint32 event);
 void        KXL_DeleteWindow(void);
 // Frame functions
 void        KXL_ReSizeFrame(Uint16 w, Uint16 h);
@@ -267,9 +267,9 @@ void        KXL_ReSizeFrame(Uint16 w, Uint16 h);
 #define     KXL_ClearFrameImm KXL_Clear_Frame
 #define     KXL_ClearFrame KXL_ClearFrameRect // Downward compatibility
 // Text functions
-void        KXL_Font(Uint8 *str, Uint8 r, Uint8 g, Uint8 b);
-void        KXL_PutText(Sint16 x, Sint16 y, Uint8 *str);
-Uint16      KXL_TextWidth(Uint8 *str);
+void        KXL_Font(const char *str, Uint8 r, Uint8 g, Uint8 b);
+void        KXL_PutText(Sint16 x, Sint16 y, const char *str);
+Uint16      KXL_TextWidth(const char *str);
 // Drawing functions
 void        KXL_SetDrawColor(Uint8 r, Uint8 g, Uint8 b);
 void        KXL_DrawPoint(Sint16 left, Sint16 top);
@@ -277,7 +277,7 @@ void        KXL_DrawLine(Sint16 left, Sint16 top, Sint16 right, Sint16 bottom);
 void        KXL_DrawRectangle(Sint16 left, Sint16 top, Uint16 width, Uint16 height, Bool flag);
 void        KXL_DrawPolygon(KXL_Polygon *data, Uint16 max, Bool next, Bool flag);
 // Image functions
-KXL_Image  *KXL_LoadBitmap(Uint8 *filename, Uint8 blend);
+KXL_Image  *KXL_LoadBitmap(const char *filename, Uint8 blend);
 #define     KXL_CopyImageRect(src, rr) KXL_Copy_Image(src, rr.Left, rr.Top, rr.Width, rr.Height)
 #define     KXL_CopyImageImm KXL_Copy_Image
 #define     KXL_CopyImage KXL_CopyImageRect // Downward compatibility
@@ -301,7 +301,7 @@ Uint16      KXL_GetButton(Uint16 *x, Uint16 *y);
 //================================================================
 // Sound function prototypes
 //================================================================
-void        KXL_InitSound(Uint8 *path, Uint8 **fname);
+void        KXL_InitSound(const char *path, char **fname);
 void        KXL_EndSound(void);
 void        KXL_PlaySound(Uint16 no, KXL_Command action);
 //================================================================

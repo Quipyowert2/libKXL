@@ -7,7 +7,7 @@
 // Internal variables and functions
 //================================================================
 KXL_Window *KXL_Root;
-Uint8 KXL_DName[1024] = "";
+char KXL_DName[1024] = "";
 
 //==============================================================
 //  Set GC from pixmap
@@ -294,7 +294,7 @@ void KXL_Put_StretchImage(KXL_Image *img, Uint16 src_l, Uint16 src_t, Uint16 src
 //  Set name of display
 //  arguments : Name of display
 //==============================================================
-void KXL_DisplayName(Uint8 *name)
+void KXL_DisplayName(const char *name)
 {
   sprintf(KXL_DName, "%s", name);
 }
@@ -306,7 +306,7 @@ void KXL_DisplayName(Uint8 *name)
 //            : title string
 //            : Event of X
 //==============================================================
-void KXL_CreateWindow(Uint16 w, Uint16 h, Uint8 *title, Uint32 event)
+void KXL_CreateWindow(Uint16 w, Uint16 h, const char *title, Uint32 event)
 {
   XSizeHints sh;
 
@@ -425,7 +425,7 @@ void KXL_ReSizeFrame(Uint16 w, Uint16 h)
 //           : green
 //           : blue
 //==============================================================
-void KXL_Font(Uint8 *str, Uint8 r, Uint8 g, Uint8 b)
+void KXL_Font(const char *str, Uint8 r, Uint8 g, Uint8 b)
 {
   Uint32 rgb;
 
@@ -462,7 +462,7 @@ void KXL_Font(Uint8 *str, Uint8 r, Uint8 g, Uint8 b)
 //            : Put top position
 //            : Put text string
 //==============================================================
-void KXL_PutText(Sint16 x, Sint16 y, Uint8 *str)
+void KXL_PutText(Sint16 x, Sint16 y, const char *str)
 {
   XDrawString(KXL_Root->Display,
               KXL_Root->Frame->Buffer, 
@@ -475,7 +475,7 @@ void KXL_PutText(Sint16 x, Sint16 y, Uint8 *str)
 //  arguments    : Text string
 //  Return value : Text width
 //==============================================================
-Uint16 KXL_TextWidth(Uint8 *str)
+Uint16 KXL_TextWidth(const char *str)
 {
   return XTextWidth(KXL_Root->WinFont, str, strlen(str));
 }
@@ -571,7 +571,7 @@ void KXL_DrawPolygon(KXL_Polygon *data, Uint16 max, Bool next, Bool flag)
 //  arguments    : File name
 //  Return value : Pointer of new image
 //==============================================================
-KXL_Image *KXL_LoadBitmap(Uint8 *filename, Uint8 blend)
+KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
 {
   // ヘッダ情報用構造体
   KXL_BitmapHeader hed;
@@ -595,7 +595,7 @@ KXL_Image *KXL_LoadBitmap(Uint8 *filename, Uint8 blend)
                      ZPixmap, 0, 0,
                      new->Width, new->Height,
                      BitmapPad(KXL_Root->Display), 0);
-  img->data = (Uint8 *)KXL_Malloc(img->bytes_per_line * new->Height);
+  img->data = KXL_Malloc(img->bytes_per_line * new->Height);
   if (KXL_Root->Depth == 16)
     KXL_CreateBitmap8to16(hed.data, img, hed.rgb, blend);
   else // 24 or 32
@@ -620,7 +620,7 @@ KXL_Image *KXL_LoadBitmap(Uint8 *filename, Uint8 blend)
                      XYPixmap, 0, 0,
                      new->Width, new->Height,
                      BitmapPad(KXL_Root->Display), 0);
-  img->data = (Uint8 *)KXL_Malloc(img->bytes_per_line * new->Height);
+  img->data = KXL_Malloc(img->bytes_per_line * new->Height);
   memset(img->data, 0, img->bytes_per_line * new->Height);
   KXL_CreateBitmap8to1(hed.data, img, blend);
   // マスクイメージをピックスマップにコピーする

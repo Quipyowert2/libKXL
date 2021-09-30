@@ -99,7 +99,7 @@ void KXL_CreateBitmap8to1(Uint8 *from, XImage *to, Uint8 blend)
 //  引き数：ファイル名
 //        ：ヘッダ情報のポインタ
 //==============================================================
-void KXL_ReadBitmapHeader(Uint8 *filename, KXL_BitmapHeader *hed)
+void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
 {
   FILE *fp;
   Uint16 i, j;
