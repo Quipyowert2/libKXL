@@ -29,3 +29,7 @@ pulseaudio
 libpulse-devel
 libX11-devel
 --------------------------------------------------------------------------
+
+Note: The sources use the euc-jp encoding. To use this encoding in Vim,
+edit a file and then run this command to switch the encoding:
+:edit ++encoding=euc-jp
