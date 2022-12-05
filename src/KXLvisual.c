@@ -11,8 +11,8 @@ char KXL_DName[1024] = "";
 
 //==============================================================
 //  Set GC from pixmap
-//  arguments°ßPixmap
-//           °ßPointer of GC
+//  argumentsÔºöPixmap
+//           ÔºöPointer of GC
 //==============================================================
 void KXL_SetGC(Pixmap p, GC *gc)
 {
@@ -73,10 +73,10 @@ KXL_Image *KXL_Copy_Image(KXL_Image *src, Uint16 src_l, Uint16 src_t, Uint16 src
   GC gc8, gc1;
   KXL_Image *dest;
 
-  // GC∫Ó¿Æ
+  // GC‰ΩúÊàê
   KXL_SetGC(src->Buffer, &gc8);
   KXL_SetGC(src->Mask, &gc1);
-  // •§•·°º•∏§À•≥•‘°º
+  // „Ç§„É°„Éº„Ç∏„Å´„Ç≥„Éî„Éº
   dest         = (KXL_Image *)KXL_Malloc(sizeof(KXL_Image));
   dest->Width  = src_w;
   dest->Height = src_h;
@@ -96,10 +96,10 @@ KXL_Image *KXL_Copy_Image(KXL_Image *src, Uint16 src_l, Uint16 src_t, Uint16 src
             gc1,
             src_l, src_t, src_w, src_h,
             0, 0);
-  // •Ø•Í•√•◊•ﬁ•π•Ø∫Ó¿Æ
+  // „ÇØ„É™„ÉÉ„Éó„Éû„Çπ„ÇØ‰ΩúÊàê
   dest->MaskGC = XCreateGC(KXL_Root->Display, KXL_Root->Frame->Buffer, 0, 0);
   XSetClipMask(KXL_Root->Display, dest->MaskGC, dest->Mask);
-  // •Ì°º•´•Î —øÙ≤Ú ¸
+  // „É≠„Éº„Ç´„É´Â§âÊï∞Ëß£Êîæ
   XFreeGC(KXL_Root->Display, gc8);
   XFreeGC(KXL_Root->Display, gc1);
   return dest;
@@ -126,10 +126,10 @@ KXL_Image *KXL_Copy_StretchImage(KXL_Image *src, Uint16 src_l, Uint16 src_t, Uin
   Uint16 ww = src->Width < width ? width : src->Width;
   Uint16 w2, h2;
   
-  // GC∫Ó¿Æ
+  // GC‰ΩúÊàê
   KXL_SetGC(src->Buffer, &gc8);
   KXL_SetGC(src->Mask, &gc1);
-  // ≤£§Œ≥»ΩÃÕ—•§•·°º•∏∫Ó¿Æ
+  // Ê®™„ÅÆÊã°Á∏ÆÁî®„Ç§„É°„Éº„Ç∏‰ΩúÊàê
   tmp = (KXL_Image *)KXL_Malloc(sizeof(KXL_Image));
   tmp->Buffer = XCreatePixmap(KXL_Root->Display, KXL_Root->Win,
                               ww, src_h,
@@ -139,7 +139,7 @@ KXL_Image *KXL_Copy_StretchImage(KXL_Image *src, Uint16 src_l, Uint16 src_t, Uin
                             1);
   w2 = width / 2;
   h2 = height / 2;
-  // ≤£§Œ≥»ΩÃ
+  // Ê®™„ÅÆÊã°Á∏Æ
   for (i = 0, p = 0; i <= w2; i ++, p += ax) {
     pp = p / 1000;
     // From left to center
@@ -173,7 +173,7 @@ KXL_Image *KXL_Copy_StretchImage(KXL_Image *src, Uint16 src_l, Uint16 src_t, Uin
               src_l + src_w - 1 - pp, src_t, 1, src_h,
               width - 1 - i, 0);
   }
-  // ≥»ΩÃ∏Â§Œ•§•·°º•∏∫Ó¿Æ
+  // Êã°Á∏ÆÂæå„ÅÆ„Ç§„É°„Éº„Ç∏‰ΩúÊàê
   dest         = (KXL_Image *)KXL_Malloc(sizeof(KXL_Image));
   dest->Width  = width;
   dest->Height = height;
@@ -183,7 +183,7 @@ KXL_Image *KXL_Copy_StretchImage(KXL_Image *src, Uint16 src_l, Uint16 src_t, Uin
   dest->Mask = XCreatePixmap(KXL_Root->Display, KXL_Root->Win,
                              width, height,
                              1);
-  // Ωƒ§Œ≥»ΩÃ
+  // Á∏¶„ÅÆÊã°Á∏Æ
   for (i = 0, p = 0; i <= h2; i ++, p += ay) {
     pp = p / 1000;
     // From up to center
@@ -220,7 +220,7 @@ KXL_Image *KXL_Copy_StretchImage(KXL_Image *src, Uint16 src_l, Uint16 src_t, Uin
   // Create clip mask GC
   dest->MaskGC = XCreateGC(KXL_Root->Display, KXL_Root->Frame->Buffer, 0, 0);
   XSetClipMask(KXL_Root->Display, dest->MaskGC, dest->Mask);
-  // •Ì°º•´•Î —øÙ≤Ú ¸
+  // „É≠„Éº„Ç´„É´Â§âÊï∞Ëß£Êîæ
   XFreeGC(KXL_Root->Display, gc8);
   XFreeGC(KXL_Root->Display, gc1);
   XFreePixmap(KXL_Root->Display, tmp->Buffer);
@@ -310,7 +310,7 @@ void KXL_CreateWindow(Uint16 w, Uint16 h, const char *title, Uint32 event)
 {
   XSizeHints sh;
 
-  // •¶•£•Û•…•¶Õ—§ŒŒŒ∞Ë§Ú≥Œ ›§π§Î
+  // „Ç¶„Ç£„É≥„Éâ„Ç¶Áî®„ÅÆÈ†òÂüü„ÇíÁ¢∫‰øù„Åô„Çã
   KXL_Root = (KXL_Window *)KXL_Malloc(sizeof(KXL_Window));
   KXL_Root->Display = NULL;
   KXL_Root->Frame = NULL;
@@ -403,7 +403,7 @@ void KXL_DeleteWindow(void)
 void KXL_ReSizeFrame(Uint16 w, Uint16 h)
 {
   if (KXL_Root->Frame) {
-    // ¥˚¬∏§Œ•’•Ï°º•‡∫ÔΩ¸
+    // Êó¢Â≠ò„ÅÆ„Éï„É¨„Éº„É†ÂâäÈô§
     XFreePixmap(KXL_Root->Display, KXL_Root->Frame->Buffer);
     XFreeGC(KXL_Root->Display, KXL_Root->Frame->Gc);
     KXL_Free(KXL_Root->Frame);
@@ -529,7 +529,7 @@ void KXL_DrawLine(Sint16 left, Sint16 top, Sint16 right, Sint16 bottom)
 //           : top
 //           : width
 //           : height
-//           : True = fill°¢False = not fill
+//           : True = fill„ÄÅFalse = not fill
 //==============================================================
 void KXL_DrawRectangle(Sint16 left, Sint16 top, Uint16 width, Uint16 height, Bool flag)
 {
@@ -573,7 +573,7 @@ void KXL_DrawPolygon(KXL_Polygon *data, Uint16 max, Bool next, Bool flag)
 //==============================================================
 KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
 {
-  // •ÿ•√•¿æ ÛÕ—πΩ¬§¬Œ
+  // „Éò„ÉÉ„ÉÄÊÉÖÂ†±Áî®ÊßãÈÄ†‰Ωì
   KXL_BitmapHeader hed;
   Uint32 i, j, k, l, no;
   KXL_Image *new;
@@ -581,14 +581,14 @@ KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
   GC gc8, gc1;
   Visual *v = DefaultVisual(KXL_Root->Display, KXL_Root->Scr);
 
-  // •”•√•»•ﬁ•√•◊•ÿ•√•¿∆…π˛§ﬂ
+  // „Éì„ÉÉ„Éà„Éû„ÉÉ„Éó„Éò„ÉÉ„ÉÄË™≠Ëæº„Åø
   KXL_ReadBitmapHeader(filename, &hed);
-  // •§•·°º•∏•µ•§•∫¿ﬂƒÍ
+  // „Ç§„É°„Éº„Ç∏„Çµ„Ç§„Ç∫Ë®≠ÂÆö
   new = (KXL_Image *)KXL_Malloc(sizeof(KXL_Image));
   new->Width = hed.w;
   new->Height = hed.height;
 
-  // 8bps§Œ•”•√•»•ﬁ•√•◊§Ú24 or 16bpp≤Ω§π§Î
+  // 8bps„ÅÆ„Éì„ÉÉ„Éà„Éû„ÉÉ„Éó„Çí24 or 16bppÂåñ„Åô„Çã
   img = XCreateImage(KXL_Root->Display,
                      v,
                      KXL_Root->Depth,
@@ -600,7 +600,7 @@ KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
     KXL_CreateBitmap8to16(hed.data, img, hed.rgb, blend);
   else // 24 or 32
     KXL_CreateBitmap8to24(hed.data, img, hed.rgb, blend);
-  // •§•·°º•∏§Ú•‘•√•Ø•π•ﬁ•√•◊§À•≥•‘°º§π§Î
+  // „Ç§„É°„Éº„Ç∏„Çí„Éî„ÉÉ„ÇØ„Çπ„Éû„ÉÉ„Éó„Å´„Ç≥„Éî„Éº„Åô„Çã
   new->Buffer = XCreatePixmap(KXL_Root->Display, KXL_Root->Win,
                               new->Width, new->Height,
                               KXL_Root->Depth);
@@ -613,7 +613,7 @@ KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
             0, 0, new->Width, new->Height); // from
   XDestroyImage(img);
 
-  // 8bps§Œ•”•√•»•ﬁ•√•◊§Ú1bps≤Ω§π§Î
+  // 8bps„ÅÆ„Éì„ÉÉ„Éà„Éû„ÉÉ„Éó„Çí1bpsÂåñ„Åô„Çã
   img = XCreateImage(KXL_Root->Display,
                      v,
                      1,
@@ -623,7 +623,7 @@ KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
   img->data = KXL_Malloc(img->bytes_per_line * new->Height);
   memset(img->data, 0, img->bytes_per_line * new->Height);
   KXL_CreateBitmap8to1(hed.data, img, blend);
-  // •ﬁ•π•Ø•§•·°º•∏§Ú•‘•√•Ø•π•ﬁ•√•◊§À•≥•‘°º§π§Î
+  // „Éû„Çπ„ÇØ„Ç§„É°„Éº„Ç∏„Çí„Éî„ÉÉ„ÇØ„Çπ„Éû„ÉÉ„Éó„Å´„Ç≥„Éî„Éº„Åô„Çã
   new->Mask = XCreatePixmap(KXL_Root->Display, KXL_Root->Win,
                             new->Width, new->Height,
                             1);
@@ -636,11 +636,11 @@ KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
             0, 0, new->Width, new->Height); // from
   XDestroyImage(img);
 
-  // •Ø•Í•√•◊•ﬁ•π•Ø∫Ó¿Æ
+  // „ÇØ„É™„ÉÉ„Éó„Éû„Çπ„ÇØ‰ΩúÊàê
   new->MaskGC = XCreateGC(KXL_Root->Display, KXL_Root->Frame->Buffer, 0, 0);
   XSetClipMask(KXL_Root->Display, new->MaskGC, new->Mask);
 
-  // ∫Ó∂»Õ—•·•‚•Í§Ú≤Ú ¸§π§Î
+  // ‰ΩúÊ•≠Áî®„É°„É¢„É™„ÇíËß£Êîæ„Åô„Çã
   XFreeGC(KXL_Root->Display, gc8);
   XFreeGC(KXL_Root->Display, gc1);
   KXL_Free(hed.rgb);

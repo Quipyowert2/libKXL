@@ -5,10 +5,10 @@
 extern KXL_Window *KXL_Root;
 
 //==============================================================
-//  8bpp¤Î£Â£Í£Ğ¤ò16bpp²½¤¹¤ë
-//  °ú¤­¿ô¡§8bps¥Ç¡¼¥¿
-//        ¡§16bpsX¥¤¥á¡¼¥¸
-//        ¡§¥Ñ¥ì¥Ã¥È
+//  8bppã®ï¼¢ï¼­ï¼°ã‚’16bppåŒ–ã™ã‚‹
+//  å¼•ãæ•°ï¼š8bpsãƒ‡ãƒ¼ã‚¿
+//        ï¼š16bpsXã‚¤ãƒ¡ãƒ¼ã‚¸
+//        ï¼šãƒ‘ãƒ¬ãƒƒãƒˆ
 //==============================================================
 void KXL_CreateBitmap8to16(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend)
 {
@@ -16,17 +16,17 @@ void KXL_CreateBitmap8to16(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend)
 
   for (y = 0; y < to->height; y ++) {
     for (x = 0; x < to->width; x ++) {
-      // ¥ª¥Õ¥»¥Ã¥È·×»»
+      // ã‚ªãƒ•ã‚»ãƒƒãƒˆè¨ˆç®—
       offset = (y * to->bytes_per_line) + (x << 1);
       no = from[y * to->width + x];
-      if (no == blend) { // »ØÄê¥Ñ¥ì¥Ã¥ÈÈÖ¹æ¤ò¹õ¤Ë¤¹¤ë
+      if (no == blend) { // æŒ‡å®šãƒ‘ãƒ¬ãƒƒãƒˆç•ªå·ã‚’é»’ã«ã™ã‚‹
         to->data[offset ++] = 0x00;
         to->data[offset ++] = 0x00;
       } else {
         // 000rrrrr, 000ggggg, 000bbbbb
         //            |
         // gg0bbbbb, rrrrrggg
-        if (!(rgb[no].r | rgb[no].g | rgb[no].b)) { // ´°Á´¤Ê¹õ¤òÌµ¤¯¤¹
+        if (!(rgb[no].r | rgb[no].g | rgb[no].b)) { // å®Œå…¨ãªé»’ã‚’ç„¡ãã™
           to->data[offset++] = 0x41;
           to->data[offset++] = 0x08;
         } else {
@@ -39,10 +39,10 @@ void KXL_CreateBitmap8to16(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend)
 }
 
 //==============================================================
-//  8bpp¤Î£Â£Í£Ğ¤ò24bpp²½¤¹¤ë
-//  °ú¤­¿ô¡§8bps¥Ç¡¼¥¿
-//        ¡§24bpsX¥¤¥á¡¼¥¸
-//        ¡§¥Ñ¥ì¥Ã¥È
+//  8bppã®ï¼¢ï¼­ï¼°ã‚’24bppåŒ–ã™ã‚‹
+//  å¼•ãæ•°ï¼š8bpsãƒ‡ãƒ¼ã‚¿
+//        ï¼š24bpsXã‚¤ãƒ¡ãƒ¼ã‚¸
+//        ï¼šãƒ‘ãƒ¬ãƒƒãƒˆ
 //==============================================================
 void KXL_CreateBitmap8to24(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend)
 {
@@ -50,15 +50,15 @@ void KXL_CreateBitmap8to24(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend)
 
   for (y = 0; y < to->height; y ++) {
     for (x = 0; x < to->width; x ++) {
-      // ¥ª¥Õ¥»¥Ã¥È·×»»
+      // ã‚ªãƒ•ã‚»ãƒƒãƒˆè¨ˆç®—
       offset = (y * to->bytes_per_line) + ((x * to->bits_per_pixel) >> 3);
       no = from[y * to->width + x];
-      if (no == blend) { // »ØÄê¥Ñ¥ì¥Ã¥ÈÈÖ¹æ¤ò¹õ¤Ë¤¹¤ë
+      if (no == blend) { // æŒ‡å®šãƒ‘ãƒ¬ãƒƒãƒˆç•ªå·ã‚’é»’ã«ã™ã‚‹
         to->data[offset ++] = 0x00;
         to->data[offset ++] = 0x00;
         to->data[offset ++] = 0x00;
       } else {
-        if (!(rgb[no].r | rgb[no].g | rgb[no].b)) { // ´°Á´¤Ê¹õ¤òÌµ¤¯¤¹
+        if (!(rgb[no].r | rgb[no].g | rgb[no].b)) { // å®Œå…¨ãªé»’ã‚’ç„¡ãã™
           to->data[offset ++] = 0x01;
           to->data[offset ++] = 0x01;
           to->data[offset ++] = 0x01;
@@ -73,9 +73,9 @@ void KXL_CreateBitmap8to24(Uint8 *from, XImage *to, KXL_RGBE *rgb, Uint8 blend)
 }
 
 //==============================================================
-//  8bpp¤Î£Â£Í£Ğ¤ò1bpp²½¤¹¤ë
-//  °ú¤­¿ô¡§8bps¥Ç¡¼¥¿
-//        ¡§1bpsX¥¤¥á¡¼¥¸
+//  8bppã®ï¼¢ï¼­ï¼°ã‚’1bppåŒ–ã™ã‚‹
+//  å¼•ãæ•°ï¼š8bpsãƒ‡ãƒ¼ã‚¿
+//        ï¼š1bpsXã‚¤ãƒ¡ãƒ¼ã‚¸
 //==============================================================
 void KXL_CreateBitmap8to1(Uint8 *from, XImage *to, Uint8 blend)
 {
@@ -83,7 +83,7 @@ void KXL_CreateBitmap8to1(Uint8 *from, XImage *to, Uint8 blend)
   
   for (y = 0; y < to->height; y ++) {
     for (x = 0; x < to->width; x ++) {
-      // ¥ª¥Õ¥»¥Ã¥È·×»»
+      // ã‚ªãƒ•ã‚»ãƒƒãƒˆè¨ˆç®—
       offset = (y * to->bytes_per_line) + (x >> 3);
       no = from[y * to->width + x];
       if (no != blend)
@@ -95,9 +95,9 @@ void KXL_CreateBitmap8to1(Uint8 *from, XImage *to, Uint8 blend)
 }
 
 //==============================================================
-//  ¥Ó¥Ã¥È¥Ş¥Ã¥×¥Ø¥Ã¥À¾ğÊóÆÉ¤ß¹ş¤ß
-//  °ú¤­¿ô¡§¥Õ¥¡¥¤¥ëÌ¾
-//        ¡§¥Ø¥Ã¥À¾ğÊó¤Î¥İ¥¤¥ó¥¿
+//  ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãƒ˜ãƒƒãƒ€æƒ…å ±èª­ã¿è¾¼ã¿
+//  å¼•ãæ•°ï¼šãƒ•ã‚¡ã‚¤ãƒ«å
+//        ï¼šãƒ˜ãƒƒãƒ€æƒ…å ±ã®ãƒã‚¤ãƒ³ã‚¿
 //==============================================================
 void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
 {
@@ -105,12 +105,12 @@ void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
   Uint16 i, j;
   Uint8  data;
 
-  // ¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¹ş¤ßÀìÍÑ¤Ç³«¤¯
+  // ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿å°‚ç”¨ã§é–‹ã
   if ((fp = fopen(filename,"rb")) == 0) {
     fprintf(stderr, "KXL error message\n'%s' is open error\n", filename);
     exit(1);
   }
-  // ¥Ø¥Ã¥ÀÆÉ¤ß¹ş¤ß
+  // ãƒ˜ãƒƒãƒ€èª­ã¿è¾¼ã¿
   fread(hed->magic, 1, 2, fp);
   if (hed->magic[0] != 'B' || hed->magic[1] != 'M') {
     fprintf(stderr, "KXL error message\n'%s' is not bitmap file\n", filename);
@@ -125,7 +125,7 @@ void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
   hed->height     = KXL_ReadU32(fp);
   hed->plane      = KXL_ReadU16(fp);
   hed->depth      = KXL_ReadU16(fp);
-  // 4 or 8bpp °Ê³°¤Ï¥µ¥İ¡¼¥È³°
+  // 4 or 8bpp ä»¥å¤–ã¯ã‚µãƒãƒ¼ãƒˆå¤–
   if (hed->depth < 4 || hed->depth > 8) {
     fprintf(stderr, "KXL error message\n'%s' %dbps not support\n", 
             filename, hed->depth);
@@ -133,7 +133,7 @@ void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
   }
   hed->lzd        = KXL_ReadU32(fp);
   hed->image_size = KXL_ReadU32(fp);
-  // ¥¤¥á¡¼¥¸¥µ¥¤¥º¤¬¤Ê¤±¤ì¤Ğ½ªÎ»
+  // ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚µã‚¤ã‚ºãŒãªã‘ã‚Œã°çµ‚äº†
   if (hed->image_size == 0) {
     fprintf(stderr, "KXL error message\n'%s not found image size\n",
             filename);
@@ -143,42 +143,42 @@ void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
   hed->y_pixels   = KXL_ReadU32(fp);
   hed->pals       = KXL_ReadU32(fp);
   hed->pals2      = KXL_ReadU32(fp);
-  // »ÈÍÑ¥Ñ¥ì¥Ã¥È¿ôÀßÄê
+  // ä½¿ç”¨ãƒ‘ãƒ¬ãƒƒãƒˆæ•°è¨­å®š
   hed->pals = hed->pals ? hed->pals : (1 << hed->depth);
-  // ¥«¥é¡¼¥Ş¥Ã¥×¼èÆÀ
+  // ã‚«ãƒ©ãƒ¼ãƒãƒƒãƒ—å–å¾—
   hed->rgb = (KXL_RGBE *)KXL_Malloc(sizeof(KXL_RGBE) * hed->pals);
   for (i = 0; i < hed->pals; i ++) {
     hed->rgb[i].b = fgetc(fp);
     hed->rgb[i].g = fgetc(fp);
     hed->rgb[i].r = fgetc(fp);
     hed->rgb[i].e = fgetc(fp);
-    // X¤¬16bpp¤Ê¤éÊäÀµ¤·¤Æ¤ª¤¯
+    // XãŒ16bppãªã‚‰è£œæ­£ã—ã¦ãŠã
     if (KXL_Root->Depth == 16) {
       hed->rgb[i].b /= 8;
       hed->rgb[i].g /= 8;
       hed->rgb[i].r /= 8;
     }
   }
-  // ²£Éı¤ò4¤ÎÇÜ¿ô¤ÇÊäÀµ¤¹¤ë
+  // æ¨ªå¹…ã‚’4ã®å€æ•°ã§è£œæ­£ã™ã‚‹
   hed->w = ((hed->width + 3) / 4) * 4;
-  // ¥Ç¡¼¥¿ÎÎ°è³ÎÊİ
+  // ãƒ‡ãƒ¼ã‚¿é ˜åŸŸç¢ºä¿
   if (hed->depth == 8)
     hed->data = (Uint8 *)KXL_Malloc(hed->image_size);
   else
     hed->data = (Uint8 *)KXL_Malloc(hed->image_size * 2);
-  // ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+  // ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
   if (hed->depth == 8) {
-    // 8bpp¤Îbmp¤òÆÉ¤ß¹ş¤ß³ÊÇ¼¤¹¤ë
+    // 8bppã®bmpã‚’èª­ã¿è¾¼ã¿æ ¼ç´ã™ã‚‹
     for (i = 0; i < hed->height; i++) {
-      // ºÇ½ª¥é¥¤¥ó¤«¤éÆÉ¤ß¹ş¤à
+      // æœ€çµ‚ãƒ©ã‚¤ãƒ³ã‹ã‚‰èª­ã¿è¾¼ã‚€
       fseek(fp, hed->offset + (hed->height - i - 1) * hed->w, 0); 
       fread(&(hed->data[i * hed->w]), hed->w, 1, fp);
     }
   } else {
     Uint32 w = (((hed->width / 2) + 3) / 4) * 4;
-    // 4bpp¤Îbmp¤òÆÉ¤ß¹ş¤ß³ÊÇ¼¤¹¤ë
+    // 4bppã®bmpã‚’èª­ã¿è¾¼ã¿æ ¼ç´ã™ã‚‹
     for (i = 0; i < hed->height; i++) {
-      // ºÇ½ª¥é¥¤¥ó¤«¤éÆÉ¤ß¹ş¤à
+      // æœ€çµ‚ãƒ©ã‚¤ãƒ³ã‹ã‚‰èª­ã¿è¾¼ã‚€
       fseek(fp, hed->offset + (hed->height - i - 1) * w, 0); 
       for (j = 0; j < w; j ++) {
         data = fgetc(fp);
