@@ -23,4 +23,4 @@ AC_CHECK_FUNCS(select)
 aclocaldir='${datadir}/aclocal'
 AC_SUBST(aclocaldir)
 
-AC_OUTPUT([KXL.spec Makefile src/Makefile docs/Makefile])
+AC_OUTPUT([KXL.spec Makefile src/Makefile docs/Makefile test/Makefile])
