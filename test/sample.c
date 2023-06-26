@@ -3,7 +3,7 @@
 
 int main(int argc, char** argv)
 {
-  Bool flag = False;
+  Bool flag = True;
 
   // Create a window by 100x100.
   // event receives only the bottom of a re-drawing event and key presss.
