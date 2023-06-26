@@ -117,6 +117,7 @@ void *KXL_Realloc(void *src, Uint32 size)
   new = realloc(src, size);
   if (new == NULL) {
     fprintf(stderr, "KXL error message\nOut Of memory!!\n");
+    free(src);
     exit(1);
   }
   return new;
