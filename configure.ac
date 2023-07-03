@@ -34,4 +34,6 @@ if test x"$test" = xyes; then
   AC_CONFIG_FILES([test/Makefile])
 fi
 
+AM_CONDITIONAL([ENABLE_TEST], [test x"$test" = xyes])
+
 AC_OUTPUT([KXL.spec Makefile src/Makefile docs/Makefile])
