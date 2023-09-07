@@ -16,6 +16,7 @@ static char* tempname = NULL;
 
 
 void fuzzCleanup(void);
+char Template[] = "test_bmp_XXXXXX";
 
 #ifdef __cplusplus
 extern "C"
@@ -23,7 +24,6 @@ extern "C"
 int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     /* If this is the first call of this function, create temp file. */
     if (!temp) {
-        char Template[] = "test_bmp_XXXXXX";
         tempname = mktemp(Template);
         if (!tempname)
             perror("tempname is NULL");
