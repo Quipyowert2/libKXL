@@ -105,16 +105,19 @@ void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
   Uint16 i, j;
   Uint8  data;
 
+  hed->data = NULL;
+
   // ファイルを読み込み専用で開く
   if ((fp = fopen(filename,"rb")) == 0) {
     fprintf(stderr, "KXL error message\n'%s' is open error\n", filename);
-    exit(1);
+    return;
   }
   // ヘッダ読み込み
   fread(hed->magic, 1, 2, fp);
   if (hed->magic[0] != 'B' || hed->magic[1] != 'M') {
     fprintf(stderr, "KXL error message\n'%s' is not bitmap file\n", filename);
-    exit(1);
+    fclose(fp);
+    return;
   }
   hed->file_size  = KXL_ReadU32(fp);
   hed->reserved1  = KXL_ReadU16(fp);
@@ -129,7 +132,8 @@ void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
   if (hed->depth < 4 || hed->depth > 8) {
     fprintf(stderr, "KXL error message\n'%s' %dbps not support\n", 
             filename, hed->depth);
-    exit(1);
+    fclose(fp);
+    return;
   }
   hed->lzd        = KXL_ReadU32(fp);
   hed->image_size = KXL_ReadU32(fp);
@@ -137,7 +141,8 @@ void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
   if (hed->image_size == 0) {
     fprintf(stderr, "KXL error message\n'%s not found image size\n",
             filename);
-    exit(1);
+    fclose(fp);
+    return;
   }
   hed->x_pixels   = KXL_ReadU32(fp);
   hed->y_pixels   = KXL_ReadU32(fp);

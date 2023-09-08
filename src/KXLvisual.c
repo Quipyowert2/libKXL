@@ -583,6 +583,8 @@ KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
 
   // ビットマップヘッダ読込み
   KXL_ReadBitmapHeader(filename, &hed);
+  if (!hed.data)
+    return NULL;
   // イメージサイズ設定
   new = (KXL_Image *)KXL_Malloc(sizeof(KXL_Image));
   new->Width = hed.w;

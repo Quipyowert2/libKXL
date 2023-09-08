@@ -55,7 +55,8 @@ int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     KXL_Image* img = KXL_LoadBitmap(tempname, blend);
 
     /* Cleanup so we don't leak memory */
-    KXL_DeleteImage(img);
+    if (img)
+        KXL_DeleteImage(img);
     return 0;
 }
 void fuzzCleanup(void) {
