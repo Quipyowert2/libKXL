@@ -1,3 +1,37 @@
+Unreleased Version 1.2.5 [9/9/2023]
+	- KXL_ReadBitmapHeader no longer loops indefinitely on corrupted BMPs.
+	- KXL_LoadBitmap and KXL_ReadBitmapHeader will fail instead of exiting your program.
+	- Documented KXL_ReadBitmapHeader.
+	- Added AFL++ sample.c fuzz target in the test/ directory.
+	- More fuzzing friendly because there are now fewer exit calls.
+-------------------------------------------------------------------------------
+Release Version 1.2.4 [30/9/2021]
+	- Fix incompatible pointer type warning.
+-------------------------------------------------------------------------------
+Release Version 1.2.3-1 [29/9/2021]
+	- Fix some pointer sign warnings
+-------------------------------------------------------------------------------
+Release version 1.2.2-1 [6/3/2020]
+	- Fix Valgrind warning "Invalid read of size 8" in KXL_PlaySound
+	- Zero bitmap data to silence Valgrind warning
+-------------------------------------------------------------------------------
+Release Version 1.2.1-1 [5/3/2020]
+	- Fix Valgrind warning write(buf) points to uninitialised byte(s)
+-------------------------------------------------------------------------------
+Release Version 1.2.0-2 [4/3/2020]
+	- Fix rpmbuild failing to find KXL library in lib64.
+-------------------------------------------------------------------------------
+Release Version 1.2.0-1 [4/3/2020]
+	- Use PulseAudio by default for sound output.
+-------------------------------------------------------------------------------
+Release Version 1.1.6-1 [22/12/2019]
+	- Change obsolete Copyright tag to License tag
+	- Fix typo in format string.
+	- Fix commented out KXL_KEY_Bracketright
+	- Fix "implicit declaration of built-in function" warnings
+	- Fix a conditional jump or move error from Valgrind
+	- Fix approx 1MB memory leak in KXL_Font()
+-------------------------------------------------------------------------------
 Release Version 1.1.5 [19/1/2002]
 	- KXL_UpDateRect function was added.
 	- KXL_UpDateImm function was added.

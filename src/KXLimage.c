@@ -99,6 +99,7 @@ void KXL_CreateBitmap8to1(Uint8 *from, XImage *to, Uint8 blend)
 //  ビットマップヘッダ情報読み込み
 //  引き数：ファイル名
 //        ：ヘッダ情報のポインタ
+//  If the image data is NULL, that means the function has failed.
 //==============================================================
 void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
 {
