@@ -296,7 +296,7 @@ void KXL_Put_StretchImage(KXL_Image *img, Uint16 src_l, Uint16 src_t, Uint16 src
 //==============================================================
 void KXL_DisplayName(const char *name)
 {
-  sprintf(KXL_DName, "%s", name);
+  snprintf(KXL_DName, 1024, "%s", name);
 }
 
 //==============================================================

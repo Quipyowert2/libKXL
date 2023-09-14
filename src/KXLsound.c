@@ -223,13 +223,13 @@ void KXL_PlaySound(Uint16 no, KXL_Command action)
 KXL_WaveList KXL_LoadSound(const char *path, const char *fname)
 {
   KXL_WaveList new;
-  char filename[256];
+  char filename[PATH_MAX];
   Uint32 length;
   FILE *file;
   Uint32 i;
   Uint8 dummy[40];
   
-  sprintf(filename,"%s/%s.wav", path, fname);
+  snprintf(filename, sizeof(filename), "%s/%s.wav", path, fname);
   if ((file = fopen(filename,"r")) == NULL) {
     fprintf(stderr, "KXL error message\nKXL_LoadSound : '%s/%s.wav' open error\n",
             path, fname);
