@@ -7,6 +7,7 @@
 #include <sys/time.h>
 #include <sys/ioctl.h>
 #include <linux/soundcard.h>
+#include <linux/limits.h> // for PATH_MAX
 #ifdef USE_PULSEAUDIO
 #include <pulse/simple.h>
 #include <pulse/error.h>
