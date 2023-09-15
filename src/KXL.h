@@ -2,6 +2,8 @@
 #define _KXLIB_H_
 
 #include <stdio.h>
+#include <stdint.h>
+#include <limits.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
@@ -152,8 +154,8 @@ typedef signed char    Sint8;
 typedef unsigned char  Uint8;
 typedef signed short   Sint16;
 typedef unsigned short Uint16;
-typedef signed long    Sint32;
-typedef unsigned long  Uint32;
+typedef int32_t Sint32;
+typedef uint32_t Uint32;
 // Image
 typedef struct {
   Pixmap Buffer;         // Drawing image
