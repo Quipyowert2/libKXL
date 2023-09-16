@@ -6,6 +6,8 @@ dnl Checks for programs.
 AC_PROG_CC
 AM_PROG_LIBTOOL
 dnl Checks for libraries.
+
+dnl https://libcheck.github.io/check/
 PKG_CHECK_MODULES([CHECK], [check >= 0.9.10])
 
 dnl Checks for header files.
