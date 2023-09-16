@@ -3,6 +3,7 @@
 #include <KXL.h>
 
 extern KXL_Window *KXL_Root;
+extern Bool KXL_SoundOk;
 
 START_TEST (test_CreateWindow)
 {
@@ -12,6 +13,12 @@ START_TEST (test_CreateWindow)
 
     ck_assert( KXL_Root->Display != NULL );
     KXL_DeleteWindow();
+
+    KXL_DisplayName("abcdefghijklmnopqrstuvwxyz");
+    KXL_CreateWindow(100, 100, "CreateWindow test",
+                   KXL_EVENT_EXPOSURE_MASK |
+                   KXL_EVENT_KEY_PRESS_MASK);
+    ck_assert(!KXL_Root->Display);
 }
 END_TEST
 
@@ -24,7 +31,23 @@ START_TEST(test_LoadBitmap)
     KXL_Image *bmp = KXL_LoadBitmap("../../geki2/bmp/boss1.bmp", 0);
     ck_assert(bmp != NULL);
     KXL_DeleteImage(bmp);
+
+    bmp = KXL_LoadBitmap("", 0);
+    ck_assert(!bmp);
     KXL_DeleteWindow();
+}
+END_TEST
+
+START_TEST(test_InitSound)
+{
+    char *snames[] = {"bgm1", ""};
+    KXL_InitSound("../../geki2/wav", snames);
+    ck_assert(KXL_SoundOk);
+    KXL_EndSound();
+    char *notexist[] = {"non-existent", ""};
+    KXL_InitSound("/dev/random/foo", notexist);
+    ck_assert(!KXL_SoundOk);
+    KXL_EndSound();
 }
 END_TEST
 
@@ -38,6 +61,7 @@ Suite * KXL_suite(void)
 
     tcase_add_test(KXL_core, test_CreateWindow);
     tcase_add_test(KXL_core, test_LoadBitmap);
+    tcase_add_test(KXL_core, test_InitSound);
 
     suite_add_tcase(s, KXL_core);
 
