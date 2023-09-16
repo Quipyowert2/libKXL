@@ -1,6 +1,8 @@
 #include <check.h>
 #include <KXL.h>
 
+static KXL_Window *KXL_Root;
+
 START_TEST (test_CreateWindow)
 {
     KXL_CreateWindow(100, 100, "CreateWindow test",
@@ -10,3 +12,8 @@ START_TEST (test_CreateWindow)
     ck_assert( KXL_Root->Display != NULL );
 }
 END_TEST
+
+int main(void)
+{
+    return 0;
+}
