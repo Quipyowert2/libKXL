@@ -24,6 +24,7 @@ AC_CHECK_FUNCS(select)
 aclocaldir='${datadir}/aclocal'
 AC_SUBST(aclocaldir)
 
+dnl Whether to enable fuzz testing
 AC_ARG_ENABLE([fuzz],
   [AS_HELP_STRING([--enable-fuzz], [enable fuzz testing KXL_LoadBitmap
   @<:@default=no@:>@])],
@@ -36,4 +37,18 @@ if test x"$fuzz" = xyes; then
 fi
 AM_CONDITIONAL([ENABLE_FUZZ], [test x"$fuzz" = xyes])
 
-AC_OUTPUT([KXL.spec Makefile src/Makefile docs/Makefile tests/Makefile])
+dnl Whether to enable unit testing
+AC_ARG_ENABLE([test],
+  [AS_HELP_STRING([--enable-test], [enable unit tests
+  @<:@default=yes@:>@])],
+  [test=$enableval], [test=yes])
+
+if test x"$test" = xyes; then
+  AC_DEFINE([TEST], [1], [Define if unit testing])
+  AC_SUBST([TEST])
+  AC_CONFIG_FILES([tests/Makefile])
+fi
+
+AM_CONDITIONAL([ENABLE_TEST], [test x"$test" = xyes])
+
+AC_OUTPUT([KXL.spec Makefile src/Makefile docs/Makefile])
