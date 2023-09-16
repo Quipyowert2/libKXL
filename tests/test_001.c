@@ -2,7 +2,7 @@
 #include <check.h>
 #include <KXL.h>
 
-static KXL_Window *KXL_Root;
+extern KXL_Window *KXL_Root;
 
 START_TEST (test_CreateWindow)
 {
