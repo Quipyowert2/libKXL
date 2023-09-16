@@ -11,6 +11,7 @@ START_TEST (test_CreateWindow)
                    KXL_EVENT_KEY_PRESS_MASK);
 
     ck_assert( KXL_Root->Display != NULL );
+    KXL_DeleteWindow();
 }
 END_TEST
 
@@ -20,8 +21,10 @@ START_TEST(test_LoadBitmap)
                    KXL_EVENT_EXPOSURE_MASK |
                    KXL_EVENT_KEY_PRESS_MASK);
 
-    KXL_Image *bmp = KXL_LoadBitmap("../geki2/bmp/boss1.bmp", 0);
+    KXL_Image *bmp = KXL_LoadBitmap("../../geki2/bmp/boss1.bmp", 0);
     ck_assert(bmp != NULL);
+    KXL_DeleteImage(bmp);
+    KXL_DeleteWindow();
 }
 END_TEST
 
