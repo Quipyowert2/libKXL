@@ -6,6 +6,8 @@
 #include <fcntl.h>
 #include <sys/time.h>
 #include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <linux/soundcard.h>
 #include <linux/limits.h> // for PATH_MAX
 #ifdef USE_PULSEAUDIO
@@ -100,6 +102,11 @@ void KXL_SoundServer(void)
           KXL_SoundData.PlayCnt --;
         }
       continue;
+    } else if (Command.Action == KXL_SOUND_QUIT) {
+      for (i = 0; i < MAX_SOUNDS_PLAYING; i ++)
+        KXL_SoundData.PlaySound[i].Active = False;
+      KXL_SoundData.PlayCnt = 0;
+      break;
     }
     
     if (KXL_SoundData.PlayCnt || Command.Active == True) {
@@ -179,15 +186,21 @@ void KXL_SoundServer(void)
         pa_simple_write(KXL_SoundData.Device, KXL_SoundData.PBuff, fragment_size, &error);
         if (error)
           fprintf(stderr, "KXL error message\nfailed to write sound data: %s\n", pa_strerror(error));
-        pa_simple_drain(KXL_SoundData.Device, &error);
-        if (error)
-          fprintf(stderr, "KXL error message\nFailed to drain sound data: %s\n", pa_strerror(error));
 #else
         write(KXL_SoundData.Device, KXL_SoundData.PBuff, fragment_size);
 #endif
       }
     }
   }
+#ifdef USE_PULSEAUDIO
+  if (KXL_SoundData.Device) {
+    int error;
+    pa_simple_drain(KXL_SoundData.Device, &error);
+    if (error)
+      fprintf(stderr, "KXL error message\nfailed to drain sound data: %s\n", pa_strerror(error));
+    pa_simple_free(KXL_SoundData.Device);
+  }
+#endif
 }
 
 //==============================================================
@@ -330,16 +343,17 @@ void KXL_EndSound(void)
   while (KXL_SoundData.ListCnt)
     KXL_Free(KXL_wavelist[-- KXL_SoundData.ListCnt].Data);
   KXL_Free(KXL_wavelist);
-#ifdef USE_PULSEAUDIO
-  if (KXL_SoundData.Device)
-    pa_simple_free(KXL_SoundData.Device);
-#else
+#ifndef USE_PULSEAUDIO
   if (KXL_SoundData.Device != -1)
     close(KXL_SoundData.Device);
 #endif
   if (KXL_SoundOk == True) {
-    KXL_PlaySound(0, KXL_SOUND_STOP_ALL);
-    kill(KXL_SoundData.ID, SIGTERM);
+    KXL_PlaySound(0, KXL_SOUND_QUIT);
+    int pid, status;
+    pid = waitpid(KXL_SoundData.ID, &status, 0);
+    if (!WIFEXITED(status)) {
+      fprintf(stderr, "KXL error message\nsound server terminated abnormally");
+    }
   }
 }
 
