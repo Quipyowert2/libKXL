@@ -55,6 +55,9 @@ jobs:
       - name: Install prerequisites
         run: sudo apt-get install check libpulse-dev
 
+      - name: Autoreconf
+        run: autoreconf -i
+
       - name: Configure
         run: ./configure --enable-test --disable-fuzz CFLAGS=--coverage LDFLAGS=--coverage
 
