@@ -58,6 +58,9 @@ jobs:
       - name: Install prerequisites
         run: sudo apt-get install check libpulse-dev
 
+      - name: Trick automake
+        run: touch ./AUTHORS ./NEWS
+
       - name: Autoreconf
         run: autoreconf -i
 
