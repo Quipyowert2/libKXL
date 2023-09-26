@@ -340,9 +340,6 @@ void KXL_InitSound(const char *path, char **fname)
 //==============================================================
 void KXL_EndSound(void)
 {
-  while (KXL_SoundData.ListCnt)
-    KXL_Free(KXL_wavelist[-- KXL_SoundData.ListCnt].Data);
-  KXL_Free(KXL_wavelist);
 #ifndef USE_PULSEAUDIO
   if (KXL_SoundData.Device != -1)
     close(KXL_SoundData.Device);
@@ -355,5 +352,8 @@ void KXL_EndSound(void)
       fprintf(stderr, "KXL error message\nsound server terminated abnormally");
     }
   }
+  while (KXL_SoundData.ListCnt)
+    KXL_Free(KXL_wavelist[-- KXL_SoundData.ListCnt].Data);
+  KXL_Free(KXL_wavelist);
 }
 
