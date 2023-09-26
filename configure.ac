@@ -7,6 +7,9 @@ AC_PROG_CC
 AM_PROG_LIBTOOL
 dnl Checks for libraries.
 
+dnl https://libcheck.github.io/check/
+PKG_CHECK_MODULES([CHECK], [check >= 0.9.10])
+
 dnl Checks for header files.
 AC_PATH_XTRA
 AC_HEADER_STDC
@@ -23,15 +26,29 @@ AC_CHECK_FUNCS(select)
 aclocaldir='${datadir}/aclocal'
 AC_SUBST(aclocaldir)
 
-AC_ARG_ENABLE([test],
-  [AS_HELP_STRING([--enable-test], [enable fuzz testing KXL_LoadBitmap
+dnl Whether to enable fuzz testing
+AC_ARG_ENABLE([fuzz],
+  [AS_HELP_STRING([--enable-fuzz], [enable fuzz testing KXL_LoadBitmap
   @<:@default=no@:>@])],
-  [test=$enableval], [test=no])
+  [fuzz=$enableval], [fuzz=no])
+
+if test x"$fuzz" = xyes; then
+  AC_DEFINE([FUZZ], [1], [Define if building fuzz program])
+  AC_SUBST([FUZZ])
+  AC_CONFIG_FILES([fuzz/Makefile])
+fi
+AM_CONDITIONAL([ENABLE_FUZZ], [test x"$fuzz" = xyes])
+
+dnl Whether to enable unit testing
+AC_ARG_ENABLE([test],
+  [AS_HELP_STRING([--enable-test], [enable unit tests
+  @<:@default=yes@:>@])],
+  [test=$enableval], [test=yes])
 
 if test x"$test" = xyes; then
-  AC_DEFINE([TEST], [1], [Define if building fuzz program])
+  AC_DEFINE([TEST], [1], [Define if unit testing])
   AC_SUBST([TEST])
-  AC_CONFIG_FILES([test/Makefile])
+  AC_CONFIG_FILES([tests/Makefile])
 fi
 
 AM_CONDITIONAL([ENABLE_TEST], [test x"$test" = xyes])
