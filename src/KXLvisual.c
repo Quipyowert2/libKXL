@@ -569,7 +569,7 @@ void KXL_DrawPolygon(KXL_Polygon *data, Uint16 max, Bool next, Bool flag)
 //==============================================================
 //  Load bitmap file of 8bits per pixel
 //  arguments    : File name
-//  Return value : Pointer of new image
+//  Return value : Pointer of new image, or NULL on failure
 //==============================================================
 KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
 {
@@ -583,6 +583,8 @@ KXL_Image *KXL_LoadBitmap(const char *filename, Uint8 blend)
 
   // ビットマップヘッダ読込み
   KXL_ReadBitmapHeader(filename, &hed);
+  if (!hed.data)
+    return NULL;
   // イメージサイズ設定
   new = (KXL_Image *)KXL_Malloc(sizeof(KXL_Image));
   new->Width = hed.w;
