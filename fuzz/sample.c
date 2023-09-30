@@ -34,7 +34,8 @@ int main(int argc, char** argv)
       }
     }
   }
-  KXL_DeleteImage(theImage);
+  if (theImage)
+    KXL_DeleteImage(theImage);
   // A window is closed
   KXL_DeleteWindow();
   return 0;
