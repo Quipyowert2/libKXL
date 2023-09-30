@@ -56,7 +56,12 @@ jobs:
             bmp/
 
       - name: Install prerequisites
-        run: sudo apt-get install check libpulse-dev xvfb
+        run: sudo apt-get install check libpulse-dev xvfb fonts-wine fontconfig
+
+      - name: Install Courier font
+        run: |
+          sudo cp /usr/share/wine/fonts/courier.ttf /usr/share/fonts
+          fc-cache -f -v
 
       - name: Trick automake
         run: touch ./AUTHORS ./NEWS
