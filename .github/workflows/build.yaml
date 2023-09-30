@@ -67,7 +67,7 @@ jobs:
         run: touch ./AUTHORS ./NEWS
 
       - name: Patch KXLvisual.c to use any font
-        run: sed -i 's/-adobe-courier-bold-r-normal-/-*-*-*-*-*-/' src/KXLvisual.c
+        run: sed -i 's/-adobe-courier-bold-r-normal--14-\*-\*-\*-\*-\*-iso8859-1/-*-*-*-*-*-*-*-*-*-*-*-*-*-*/' src/KXLvisual.c
 
       - name: Autoreconf
         run: autoreconf -i
