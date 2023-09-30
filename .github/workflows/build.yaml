@@ -66,6 +66,9 @@ jobs:
       - name: Trick automake
         run: touch ./AUTHORS ./NEWS
 
+      - name: Patch KXLvisual.c to use any font
+      - run: sed -i 's/-adobe-courier-bold-r-normal-/-*-*-*-*-*-/' src/KXLvisual.c
+
       - name: Autoreconf
         run: autoreconf -i
 
