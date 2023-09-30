@@ -32,7 +32,8 @@ START_TEST(test_LoadBitmap)
     ck_assert(bmp != NULL);
     KXL_DeleteImage(bmp);
 
-    bmp = KXL_LoadBitmap("", 0);
+    // Load AFL++ generated bmp which used to cause old KXL versions to go into an infinite loop
+    bmp = KXL_LoadBitmap("../fuzz/test_bmp_PXIpZM", 0);
     ck_assert(!bmp);
     KXL_DeleteWindow();
 }
