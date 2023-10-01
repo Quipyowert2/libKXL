@@ -348,9 +348,12 @@ void KXL_EndSound(void)
     KXL_PlaySound(0, KXL_SOUND_QUIT);
     int pid, status;
     pid = waitpid(KXL_SoundData.ID, &status, 0);
-    if (!WIFEXITED(status)) {
-      fprintf(stderr, "KXL error message\nsound server terminated abnormally");
+    if (WIFEXITED(status)) {
+      if (WEXITSTATUS(status))
+        fprintf(stderr, "KXL error message\nsound server exited with status %d", WEXITSTATUS(status));
     }
+    else
+      fprintf(stderr, "KXL error message\nsound server terminated abnormally");
   }
   while (KXL_SoundData.ListCnt)
     KXL_Free(KXL_wavelist[-- KXL_SoundData.ListCnt].Data);
