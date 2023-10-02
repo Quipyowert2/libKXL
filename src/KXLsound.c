@@ -282,9 +282,13 @@ void KXL_LoadSoundData(const char *path, char **fname)
 //==============================================================
 void KXL_InitSound(const char *path, char **fname)
 {
+  Uint16 i = 0;
   KXL_SoundOk = False;
 
   KXL_LoadSoundData(path, fname);
+  for (i = 0;i < KXL_SoundData.ListCnt;i++)
+    if (KXL_wavelist[i].Data == NULL)
+      return;
 #ifndef USE_PULSEAUDIO
   // device check
   if ((KXL_SoundData.Device = open("/dev/dsp", O_WRONLY)) == -1) {
