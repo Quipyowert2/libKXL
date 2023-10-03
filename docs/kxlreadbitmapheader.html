@@ -1,0 +1,68 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+   <meta name="GENERATOR" content="emacs">
+   <meta name="Author" content="Quipyowert">
+   <title>KXL_ReadBitmapHeader</title>
+</head>
+<body text="#000000" bgcolor="#f0f0dc" link="#3366FF" vlink="#3366FF" alink="#FF0000">
+
+<a href="kxlloadbitmap.html">Prev</a>
+<a href="KXL.html">Top</a>
+<a href="kxlcopyimagerect.html">Next</a>
+<hr>
+
+<b>Name</b><br><br>
+<font size=+2>KXL_ReadBitmapHeader</font><br><br>
+
+<b>Synopsis</b><br>
+<pre>KXL_ReadBitmapHeader -- Helper function for KXL_LoadBitmap.
+The bitmap file must be saved in 4bpp(16 colors) or 8bpp(256 colors) color.
+</pre><br>
+
+<b>Description</b><br>
+<pre>void KXL_LoadBitmap(const char *filename, KXL_BitmapHeader *hed);</pre><br>
+
+<b>Arguments</b><br><br>
+<table border="1">
+<tr><td>filename</td><td>Bitmap file name.</td>
+<tr><td>hed</td><td>Pointer to a bitmap header structure.<br>
+</td>
+</table>
+<br><br>
+
+<b>Return Value</b><br><br>
+Nothing. If this function fails, `hed->data` will be NULL.
+<br><br><br>
+
+<b>Exsample</b><br>
+<pre>
+<a href="./sample.bmp">sample.bmp</a> - 131 colors.
+<img src="./sample.gif">
+0 number is black.
+
+#include &lt;KXL.h&gt;
+int main(void)
+{
+  <b>KXL_Image *mask_img, *nomask_img;</b>
+  
+  KXL_CreateWindow(100, 100, "sample", 0);
+  <b>mask_img = KXL_LoadBitmap("sample.bmp", 0);
+  nomask_img = KXL_LoadBitmap("sample.bmp", 255);</b>
+  
+  KXL_SetDrawColor(0x00, 0x00, 0xff);
+  KXL_ClearFrameImm(0, 0, 100, 100);
+  KXL_PutImage(nomask_img, 10, 10);
+  KXL_PutImage(mask_img, 50, 50);
+  KXL_UpDateImm(0, 0, 100, 100);
+  getchar();
+  KXL_DeleteImage(mask_img);
+  KXL_DeleteImage(nomask_img);
+  KXL_DeleteWindow();
+  return 0;
+}
+</pre>
+
+</body>
+</html>
