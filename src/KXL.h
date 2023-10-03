@@ -176,7 +176,8 @@ typedef enum {
   KXL_SOUND_PLAY,        // Play sound
   KXL_SOUND_PLAY_LOOP,   // Loop play sound
   KXL_SOUND_STOP,        // Stop sound
-  KXL_SOUND_STOP_ALL     // Stop all sound
+  KXL_SOUND_STOP_ALL,    // Stop all sound
+  KXL_SOUND_QUIT         // Quit the sound server
 } KXL_Command;
 
 //================================================================
