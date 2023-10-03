@@ -166,7 +166,7 @@ void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
     long pos = ftell(fp);
     if ((pos + 4 * (long)hed->pals) > st.st_size) {
 #endif
-      fprintf(stderr, "KXL error message\n'%s' not found palette or truncated", filename);
+      fprintf(stderr, "KXL error message\n'%s' not found palette or truncated\n", filename);
       fclose(fp);
       return;
     }
@@ -196,7 +196,7 @@ void KXL_ReadBitmapHeader(const char *filename, KXL_BitmapHeader *hed)
     long pos = ftell(fp);
     if ((pos + (long)hed->image_size) > st.st_size) {
 #endif
-      fprintf(stderr, "KXL error message\n'%s' not found image data or truncated", filename);
+      fprintf(stderr, "KXL error message\n'%s' not found image data or truncated\n", filename);
       free(hed->rgb);
       fclose(fp);
       return;

@@ -13,7 +13,13 @@ START_TEST (test_CreateWindow)
 
     ck_assert( KXL_Root->Display != NULL );
     KXL_DeleteWindow();
+}
+END_TEST
 
+// Test creating a window with invalid $DISPLAY value.
+// This test should always fail.
+START_TEST (test_CreateWindow2)
+{
     KXL_DisplayName("abcdefghijklmnopqrstuvwxyz");
     KXL_CreateWindow(100, 100, "CreateWindow test",
                    KXL_EVENT_EXPOSURE_MASK |
@@ -32,7 +38,8 @@ START_TEST(test_LoadBitmap)
     ck_assert(bmp != NULL);
     KXL_DeleteImage(bmp);
 
-    bmp = KXL_LoadBitmap("", 0);
+    // Load AFL++ generated bmp which used to cause old KXL versions to go into an infinite loop
+    bmp = KXL_LoadBitmap("../fuzz/test_bmp_PXIpZM", 0);
     ck_assert(!bmp);
     KXL_DeleteWindow();
 }
@@ -60,6 +67,7 @@ Suite * KXL_suite(void)
     KXL_core = tcase_create("Core tests");
 
     tcase_add_test(KXL_core, test_CreateWindow);
+    tcase_add_exit_test(KXL_core, test_CreateWindow2, 1);
     tcase_add_test(KXL_core, test_LoadBitmap);
     tcase_add_test(KXL_core, test_InitSound);
 
