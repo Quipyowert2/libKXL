@@ -56,7 +56,7 @@ jobs:
             bmp/
 
       - name: Install prerequisites
-        run: sudo apt-get install check libpulse-dev xvfb fonts-wine fontconfig
+        run: sudo apt-get install check libpulse-dev pulseaudio pulseaudio-utils xvfb fonts-wine fontconfig
 
       - name: Install Courier font
         run: |
@@ -68,6 +68,12 @@ jobs:
 
       - name: Patch KXLvisual.c to use any font
         run: sed -i 's/-adobe-courier-bold-r-normal--14-\*-\*-\*-\*-\*-iso8859-1/-*-*-*-*-*-*-*-*-*-*-*-*-*-*/' src/KXLvisual.c
+
+      - name: Fake PulseAudio device
+        run: |
+          pulseaudio --daemonize=yes
+          pacmd load-module module-null-sink sink_name=MySink
+          pacmd update-sink-proplist MySink device.description=MySink
 
       - name: Autoreconf
         run: autoreconf -i
