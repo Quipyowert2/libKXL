@@ -153,7 +153,7 @@ void KXL_SoundServer(void)
           if (KXL_SoundData.PlaySound[i].Active == False)
             continue;
           sample_ptr = KXL_SoundData.PlaySound[i].Pos+KXL_SoundData.PlaySound[i].Cnt;
-          sample_size = MIN(max_sample_size, KXL_SoundData.PlaySound[i].Length - KXL_SoundData.PlaySound[i].Cnt);
+          sample_size = MIN(max_sample_size, ((Sint32)KXL_SoundData.PlaySound[i].Length) - (Sint32)KXL_SoundData.PlaySound[i].Cnt);
           KXL_SoundData.PlaySound[i].Cnt += sample_size;
           memcpy(KXL_SoundData.FBuff, sample_ptr, sample_size);
           if (KXL_SoundData.PlaySound[i].Action == KXL_SOUND_PLAY_LOOP &&
